@@ -1,4 +1,4 @@
-package com.gwd.tracetool.service;
+/*package com.gwd.tracetool.service;
 
 import com.gwd.tracetool.domain.ApiModel;
 
@@ -17,7 +17,7 @@ public class ApiAnalysis {
         String url;
 
         for(int i=0; i<array.size();i++){
-            url = array.get(i).getUrl();
+            //url = array.get(i).get();
             Map<String, String> urlMap = splitUrl(url);
 
             String destinationHost = urlMap.get("destinationHost");  // ex) inbound-admin.daouoffice.com
@@ -142,4 +142,4 @@ public class ApiAnalysis {
         }
     }
 
-}
+}*/

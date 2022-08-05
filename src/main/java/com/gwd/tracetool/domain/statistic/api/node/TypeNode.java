@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public class TypeNode {
     private final String type;
-    private Integer count;
+    private int count;
+    //private Integer totalTime;
 
     public TypeNode(String type) {
         this.type = type;
@@ -14,4 +15,8 @@ public class TypeNode {
     public void increaseCount() {
         count++;
     }
+
+    /*public void increaseTotalTime(Integer timeConsume) {
+        totalTime += timeConsume;
+    }*/
 }

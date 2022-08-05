@@ -27,10 +27,14 @@ public class ApiParserService {
         List<String> urlList = List.of(subStr.split(", code:"));
         List<String> statusList = List.of(urlList.get(1).split(",|:"));
 
-        urlList = List.of(urlList.get(1).split(",|:");
+        urlList = List.of(urlList.get(0).split(":"));
+
+
+
 
         return ApiModel.builder()
-                .url(urlList.get(0).substring(4))
+                .host(urlList.get(2).substring(2))
+                .apiType(urlList.get(3).substring(4))
                 .code(Integer.valueOf(statusList.get(0)))
                 .time(statusList.get(2))
                 .message(statusList.get(4))
