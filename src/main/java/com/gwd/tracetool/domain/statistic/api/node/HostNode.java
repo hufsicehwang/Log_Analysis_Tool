@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class HostNode {
     private final String hostName;
-    private Integer count;
+    private int count;
 
     public HostNode(String hostName) {
         this.hostName = hostName;
