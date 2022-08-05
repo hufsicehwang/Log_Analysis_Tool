@@ -27,6 +27,8 @@ public class ApiParserService {
         List<String> urlList = List.of(subStr.split(", code:"));
         List<String> statusList = List.of(urlList.get(1).split(",|:"));
 
+        urlList = List.of(urlList.get(1).split(",|:");
+
         return ApiModel.builder()
                 .url(urlList.get(0).substring(4))
                 .code(Integer.valueOf(statusList.get(0)))

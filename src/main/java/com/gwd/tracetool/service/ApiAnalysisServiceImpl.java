@@ -30,11 +30,19 @@ public class ApiAnalysisServiceImpl implements ApiAnalysisService{
 
     @Override
     public StatusCodeStatistic calcStatusCode(List<ApiModel> apiModels) {
-        return null;
+        StatusCodeStatistic stat = new StatusCodeStatistic();
+        for(ApiModel model:apiModels){
+            stat.increaseStat(model.getCode());
+        }
+        return stat;
     }
 
     @Override
     public TypeStatistic calcType(List<ApiModel> apiModels) {
+        TypeStatistic stat = new TypeStatistic();
+        for(ApiModel model:apiModels){
+            stat.increaseStat(model.getapiType());
+        }
         return null;
     }
 }
