@@ -29,12 +29,16 @@ public class ApiParserService {
 
         urlList = List.of(urlList.get(0).split(":"));
 
-
+        String apiType = urlList.get(3).substring(4);
+        if (apiType.contains("OPERATION")) {
+            int index = apiType.indexOf("/OPERATION");
+            apiType = apiType.substring(0, index);
+        }
 
 
         return ApiModel.builder()
                 .host(urlList.get(2).substring(2))
-                .apiType(urlList.get(3).substring(4))
+                .apiType(apiType)
                 .code(Integer.valueOf(statusList.get(0)))
                 .time(statusList.get(2))
                 .message(statusList.get(4))
