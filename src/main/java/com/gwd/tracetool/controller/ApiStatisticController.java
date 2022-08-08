@@ -28,22 +28,22 @@ public class ApiStatisticController {
     }
 
     @GetMapping("/api/analyze/dags-log/destination-host")
-    public DestinationHostStatistic calcDestinationHost(@RequestParam(value = "yyyymmdd") String date){
+    public DestinationHostStatistic calcDestinationHost(@RequestParam String date){
         return apiAnalysisService.calcDestinationHost(apiParserService.readApi(date));
     }
 
     @GetMapping("/api/analyze/dags-log/status-code")
-    public StatusCodeStatistic calcStatusCode(@RequestParam(value = "yyyymmdd") String date){
+    public StatusCodeStatistic calcStatusCode(@RequestParam String date){
         return apiAnalysisService.calcStatusCode(apiParserService.readApi(date));
     }
 
-    @GetMapping("/api/analyze/dags-log/")
-    public DagsHostStatistic calcDagsHost(@RequestParam(value = "yyyymmdd") String date){
+    @GetMapping("/api/analyze/dags-log")
+    public DagsHostStatistic calcDagsHost(@RequestParam String date){
         return apiAnalysisService.calcDagsHost(apiParserService.readApi(date));
     }
 
     @GetMapping("/api/analyze/dags-log/api-type")
-    public TypeStatistic calcType(@RequestParam(value = "yyyymmdd") String date){
+    public TypeStatistic calcType(@RequestParam String date){
         return apiAnalysisService.calcType(apiParserService.readApi(date));
     }
 }
