@@ -20,21 +20,45 @@ public class ApiAnalysisServiceImpl implements ApiAnalysisService{
 
     @Override
     public DagsHostStatistic calcDagsHost(List<ApiModel> apiModels) {
-        return null;
+
+        DagsHostStatistic stat = new DagsHostStatistic();
+        for (ApiModel model : apiModels) {
+
+            if (model.getLogOffset() == 1) {
+                stat.increaseDags1ApiCount();
+            }
+            else {
+                stat.increaseDags2ApiCount();
+            }
+        }
+        return stat;
     }
 
     @Override
     public DestinationHostStatistic calcDestinationHost(List<ApiModel> apiModels) {
-        return null;
+        DestinationHostStatistic stat = new DestinationHostStatistic();
+        for (ApiModel model : apiModels) {
+            stat.increaseStat(model.getHost());
+        }
+        return stat;
     }
 
     @Override
     public StatusCodeStatistic calcStatusCode(List<ApiModel> apiModels) {
-        return null;
+        StatusCodeStatistic stat = new StatusCodeStatistic();
+        for(ApiModel model:apiModels){
+            stat.increaseStat(model.getCode());
+        }
+        return stat;
     }
 
     @Override
     public TypeStatistic calcType(List<ApiModel> apiModels) {
-        return null;
+        TypeStatistic stat = new TypeStatistic();
+        for(ApiModel model:apiModels){
+            stat.increaseStat(model.getApiType());
+        }
+        return stat;
     }
+
 }

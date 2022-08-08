@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class StatusCodeNode {
     private final Integer statusCode;
-    private Integer count;
+    private int count;
 
     public StatusCodeNode(Integer statusCode) {
         this.statusCode = statusCode;
