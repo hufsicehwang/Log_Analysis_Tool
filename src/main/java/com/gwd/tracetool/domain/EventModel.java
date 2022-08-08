@@ -1,5 +1,12 @@
 package com.gwd.tracetool.domain;
 
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventModel {
     private String eventName;
     private String transactionId;
@@ -7,43 +14,19 @@ public class EventModel {
     private String provider;
     private String httpStatusCode;
 
-    public String getEventName() {
-        return eventName;
-    }
+    private int logOffset;
 
-    public void setEventName(String eventName) {
+    private LocalDateTime occurrenceTime;
+
+    @Builder
+
+    public EventModel(String eventName, String transactionId, String createAt, String provider, String httpStatusCode, int logOffset, LocalDateTime occurrenceTime) {
         this.eventName = eventName;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public String getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(String createAt) {
         this.createAt = createAt;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
         this.provider = provider;
-    }
-
-    public String getHttpStatusCode() {
-        return httpStatusCode;
-    }
-
-    public void setHttpStatusCode(String httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+        this.logOffset = logOffset;
+        this.occurrenceTime = occurrenceTime;
     }
 }
