@@ -11,5 +11,4 @@ public interface ApiAnalysisService {
     StatusCodeStatistic calcStatusCode(List<ApiModel> apiModels);
     TimeStatistic calcTime(List<ApiModel> apiModels);
     TypeStatistic calcType(List<ApiModel> apiModels);
-
 }
