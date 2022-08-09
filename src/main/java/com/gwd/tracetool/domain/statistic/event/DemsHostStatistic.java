@@ -10,10 +10,11 @@ public class DemsHostStatistic {
         this.dems2EventCount = 0;
     }
 
-    public void increaseDems1EventCount(){
+    public void increaseDems1EventCount() {
         dems1EventCount++;
     }
-    public void increaseDems2EventCount(){
+
+    public void increaseDems2EventCount() {
         dems2EventCount++;
     }
 }

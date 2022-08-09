@@ -9,6 +9,7 @@ import java.util.List;
 public interface EventAnalysisService {
 
     DemsHostStatistic calcDemsHost(List<EventModel> eventModels);
+
     EventNameStatistic calcEventName(List<EventModel> eventModels);
 
 }

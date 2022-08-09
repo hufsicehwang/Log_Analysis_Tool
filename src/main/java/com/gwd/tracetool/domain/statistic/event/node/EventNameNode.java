@@ -12,7 +12,7 @@ public class EventNameNode {
         this.eventName = eventName;
     }
 
-    public void increaseCount(){
+    public void increaseCount() {
         count++;
     }
 }

@@ -14,19 +14,18 @@ public class EventModel {
     private String provider;
     private String httpStatusCode;
 
-    private int logOffset;
+    private int fileCreatedServer;
 
     private LocalDateTime occurrenceTime;
 
     @Builder
-
-    public EventModel(String eventName, String transactionId, String createAt, String provider, String httpStatusCode, int logOffset, LocalDateTime occurrenceTime) {
+    public EventModel(String eventName, String transactionId, String createAt, String provider, String httpStatusCode, int fileCreatedServer, LocalDateTime occurrenceTime) {
         this.eventName = eventName;
         this.transactionId = transactionId;
         this.createAt = createAt;
         this.provider = provider;
         this.httpStatusCode = httpStatusCode;
-        this.logOffset = logOffset;
+        this.fileCreatedServer = fileCreatedServer;
         this.occurrenceTime = occurrenceTime;
     }
 }

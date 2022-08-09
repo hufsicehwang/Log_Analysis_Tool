@@ -13,11 +13,10 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     public DemsHostStatistic calcDemsHost(List<EventModel> eventModels) {
         DemsHostStatistic stat = new DemsHostStatistic();
 
-        for(EventModel model: eventModels){
-            if(model.getLogOffset()==1){
+        for (EventModel model : eventModels) {
+            if (model.getFileCreatedServer() == 1) {
                 stat.increaseDems1EventCount();
-            }
-            else {
+            } else {
                 stat.increaseDems2EventCount();
             }
 
@@ -30,7 +29,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     public EventNameStatistic calcEventName(List<EventModel> eventModels) {
         EventNameStatistic stat = new EventNameStatistic();
 
-        for (EventModel model: eventModels){
+        for (EventModel model : eventModels) {
             stat.increaseStat(model.getEventName());
         }
         return stat;

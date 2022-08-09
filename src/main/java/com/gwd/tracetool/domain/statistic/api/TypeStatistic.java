@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class TypeStatistic {
+public class TypeStatistic { // api 종류에 따라 통계
     private final List<TypeNode> types = new ArrayList<>();
 
     public void increaseStat(String apiType, String msTime) {
