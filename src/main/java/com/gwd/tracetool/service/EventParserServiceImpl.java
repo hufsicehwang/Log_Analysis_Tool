@@ -32,7 +32,7 @@ public class EventParserServiceImpl implements EventParserService {
     @Override
     public List readEventList(String date) {
 
-        int fileCreatedServer = 1;
+        int demsHost = 1;
         List<EventModel> list = new ArrayList<EventModel>();
         String fileName = generateFileName(date);
 
@@ -41,13 +41,13 @@ public class EventParserServiceImpl implements EventParserService {
                 Paths.get(toolProperties.getDems2LogPath(), fileName)));
 
         for (Path logPath : dagsLogDirPathList) {
-            list.addAll(readEventLogFile(logPath, fileCreatedServer++));
+            list.addAll(readEventLogFile(logPath, demsHost++));
         }
 
         return list;
     }
 
-    private List readEventLogFile(Path path, int fileCreatedServer) {
+    private List readEventLogFile(Path path, int demsHost) {
         List<EventModel> list = new ArrayList<EventModel>();
         JSONObject headerJSON = new JSONObject();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -71,7 +71,7 @@ public class EventParserServiceImpl implements EventParserService {
                         headerJSON = stringToJSON(subStr);
                         EventModel eventModel = createEventModel(headerJSON);
                         eventModel.setOccurrenceTime(occurrenceTime);
-                        eventModel.setFileCreatedServer(fileCreatedServer);
+                        eventModel.setDemsHost(demsHost);
                         list.add(eventModel);
 
                     }
