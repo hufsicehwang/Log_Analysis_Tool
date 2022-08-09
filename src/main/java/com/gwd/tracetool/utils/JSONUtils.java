@@ -17,4 +17,14 @@ public class JSONUtils {
             return "NoEventName";
         }
     }
+
+    public static String getCreateAt(JSONObject headerJSON){
+        try {
+            JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
+            JSONObject eventObject = (JSONObject) JSONValue.parse(headerObject.get("event").toString());
+            return eventObject.get("createAt").toString();
+        } catch (NullPointerException e) {
+            return "NoCreateAt";
+        }
+    }
 }

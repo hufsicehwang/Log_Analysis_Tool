@@ -1,5 +1,7 @@
 package com.gwd.tracetool.domain.statistic.event;
+import lombok.Getter;
 
+@Getter
 public class DemsHostStatistic {
 
     private Integer dems1EventCount;

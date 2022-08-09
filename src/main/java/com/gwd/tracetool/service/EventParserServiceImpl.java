@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -33,7 +34,7 @@ public class EventParserServiceImpl implements EventParserService {
     public List readEventList(String date) {
 
         int demsHost = 1;
-        List<EventModel> list = new ArrayList<EventModel>();
+        List<EventModel> list = new ArrayList<>();
         String fileName = generateFileName(date);
 
         List<Path> dagsLogDirPathList = new ArrayList<>(Arrays.asList(
@@ -85,10 +86,9 @@ public class EventParserServiceImpl implements EventParserService {
     }
 
     private EventModel createEventModel(JSONObject headerJson) {
-        System.out.println("value : " + JSONUtils.getEventName(headerJson));
         String eventName = JSONUtils.getEventName(headerJson);
-
-        return EventModel.builder().eventName(eventName).build();
+        String createAt = JSONUtils.getCreateAt(headerJson);
+        return EventModel.builder().eventName(eventName).createAt(createAt).build();
     }
 
     private String generateFileName(String date) {

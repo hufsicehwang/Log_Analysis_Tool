@@ -28,4 +28,6 @@ public class EventModel {
         this.demsHost = demsHost;
         this.occurrenceTime = occurrenceTime;
     }
+
+
 }

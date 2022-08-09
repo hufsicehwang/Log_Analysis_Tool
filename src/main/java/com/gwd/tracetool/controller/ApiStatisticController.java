@@ -37,7 +37,7 @@ public class ApiStatisticController {
         return apiAnalysisService.calcStatusCode(apiParserService.readApiList(date));
     }
 
-    @GetMapping("/api/analysis/dags-log")
+    @GetMapping("/api/analysis/dags-log/dags-host")
     public DagsHostStatistic calcDagsHost(@RequestParam String date) {
         return apiAnalysisService.calcDagsHost(apiParserService.readApiList(date));
     }
