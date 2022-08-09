@@ -3,7 +3,7 @@ package com.gwd.tracetool.controller;
 import com.gwd.tracetool.domain.ApiModel;
 import com.gwd.tracetool.domain.statistic.api.*;
 import com.gwd.tracetool.service.ApiAnalysisService;
-import com.gwd.tracetool.service.ApiParserServiceImpl;
+import com.gwd.tracetool.service.ApiParserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ApiStatisticController {
-    private final ApiParserServiceImpl apiParserService;
+    private final ApiParserService apiParserService;
     private final ApiAnalysisService apiAnalysisService;
 
     @GetMapping("/api/parse/dags-log")

@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class EventParserServiceImpl implements EventParserService {
     public List readEventList(String date) {
 
         int demsHost = 1;
-        List<EventModel> list = new ArrayList<>();
+        List<EventModel> list = new ArrayList<EventModel>();
         String fileName = generateFileName(date);
 
         List<Path> dagsLogDirPathList = new ArrayList<>(Arrays.asList(
@@ -87,14 +88,30 @@ public class EventParserServiceImpl implements EventParserService {
 
     private EventModel createEventModel(JSONObject headerJson) {
         String eventName = JSONUtils.getEventName(headerJson);
+        String workflowType = JSONUtils.getWorkflowType(headerJson);
         String createAt = JSONUtils.getCreateAt(headerJson);
-        return EventModel.builder().eventName(eventName).createAt(createAt).build();
+
+        return EventModel.builder()
+                .eventName(eventName)
+                .workflowType(workflowType)
+                .createAt(createAt)
+                .build();
     }
 
     private String generateFileName(String date) {
-        // example : dems_feign.2022-07-14.log
-
-        return String.format("dems.%s.log", date);
+        // example : dems.2022-07-14.log
+        try {
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormatParser.setLenient(false);
+            // 대상 인자 검증
+            dateFormatParser.parse(date);
+            return String.format("dems.%s.log", date);
+        } catch (Exception e) {
+            String yyyy = date.substring(0, 4);
+            String mm = date.substring(4, 6);
+            String dd = date.substring(6, 8);
+            return String.format("dems.%s-%s-%s.log", yyyy, mm, dd);
+        }
     }
 
     private JSONObject stringToJSON(String strValue) {

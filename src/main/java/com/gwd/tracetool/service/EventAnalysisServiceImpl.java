@@ -1,9 +1,7 @@
 package com.gwd.tracetool.service;
 
 import com.gwd.tracetool.domain.EventModel;
-import com.gwd.tracetool.domain.statistic.event.DemsHostStatistic;
-import com.gwd.tracetool.domain.statistic.event.EventNameStatistic;
-import com.gwd.tracetool.domain.statistic.event.TimeStatistic;
+import com.gwd.tracetool.domain.statistic.event.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,6 +39,16 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
 
         for (EventModel model : eventModels) {
             stat.increaseStat(model.getEventName());
+        }
+        return stat;
+    }
+
+    @Override
+    public WorkflowStatistic calcWorkflow(List<EventModel> eventModels) {
+        WorkflowStatistic stat = new WorkflowStatistic();
+
+        for (EventModel model : eventModels) {
+            stat.increaseStat(model.getWorkflowType());
         }
         return stat;
     }
