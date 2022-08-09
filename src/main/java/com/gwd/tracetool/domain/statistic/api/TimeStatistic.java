@@ -8,10 +8,10 @@ import lombok.Getter;
  * -le : <=
  * -ge : >=
  * -eq : ==
- */
+ **/
 
 @Getter
-public class TimeStatistic {
+public class TimeStatistic {    // response 응답 시간에 따라 통계
     private Integer gt100Ms;
     private Integer gt500Ms;
     private Integer gt1000Ms;

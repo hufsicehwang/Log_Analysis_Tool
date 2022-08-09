@@ -3,7 +3,7 @@ package com.gwd.tracetool.domain.statistic.api;
 import lombok.Getter;
 
 @Getter
-public class DagsHostStatistic { // dags server 별
+public class DagsHostStatistic {  // dags log file이 생성된 server에 따라 통계
     private Integer dags1ApiCount;
     private Integer dags2ApiCount;
 
