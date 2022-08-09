@@ -63,19 +63,16 @@ public class EventParserServiceImpl implements EventParserService {
 
             while ((line = br.readLine()) != null) {
                 if (line.contains(queueRecord)) {
-
                     int i = line.indexOf(token) + token.length();
-                    if (i != -1) {
 
+                    if (i != -1) {
                         LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                         String subStr = line.substring(i);
-
                         headerJSON = stringToJSON(subStr);
                         EventModel eventModel = createEventModel(headerJSON);
                         eventModel.setOccurrenceTime(occurrenceTime);
                         eventModel.setDemsHost(demsHost);
                         list.add(eventModel);
-
                     }
                 }
             }
@@ -90,11 +87,13 @@ public class EventParserServiceImpl implements EventParserService {
         String eventName = JSONUtils.getEventName(headerJson);
         String workflowType = JSONUtils.getWorkflowType(headerJson);
         String createAt = JSONUtils.getCreateAt(headerJson);
+        String provider = JSONUtils.getProvider(headerJson);
 
         return EventModel.builder()
                 .eventName(eventName)
                 .workflowType(workflowType)
                 .createAt(createAt)
+                .provider(provider)
                 .build();
     }
 

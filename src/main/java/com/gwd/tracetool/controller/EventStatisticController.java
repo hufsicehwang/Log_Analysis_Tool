@@ -37,5 +37,10 @@ public class EventStatisticController {
         return eventAnalysisService.calcTime(eventParserService.readEventList(date));
     }
 
+    @GetMapping("/api/analysis/dems-log/provider")
+    public ProviderStatistic calcProvider(@RequestParam String date) {
+        return eventAnalysisService.calcProvider(eventParserService.readEventList(date));
+    }
+
 
 }

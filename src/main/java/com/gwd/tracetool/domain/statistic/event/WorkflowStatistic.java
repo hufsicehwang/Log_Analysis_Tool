@@ -2,7 +2,6 @@ package com.gwd.tracetool.domain.statistic.event;
 
 import com.gwd.tracetool.domain.statistic.event.node.WorkflowNode;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 

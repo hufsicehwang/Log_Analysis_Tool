@@ -52,4 +52,14 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         }
         return stat;
     }
+
+    @Override
+    public ProviderStatistic calcProvider(List<EventModel> eventModels) {
+        ProviderStatistic stat = new ProviderStatistic();
+
+        for(EventModel model : eventModels){
+            stat.increaseStat(model.getProvider());
+        }
+        return stat;
+    }
 }
