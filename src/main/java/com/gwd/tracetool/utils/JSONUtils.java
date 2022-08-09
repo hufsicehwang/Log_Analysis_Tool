@@ -2,8 +2,6 @@ package com.gwd.tracetool.utils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class JSONUtils {
     private JSONUtils() {
@@ -20,7 +18,7 @@ public class JSONUtils {
         }
     }
 
-    public static String getCreateAt(JSONObject headerJSON){
+    public static String getCreateAt(JSONObject headerJSON) {
         try {
             JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
             JSONObject eventObject = (JSONObject) JSONValue.parse(headerObject.get("event").toString());
@@ -30,7 +28,7 @@ public class JSONUtils {
         }
     }
 
-    public static String getProvider(JSONObject headerJSON){
+    public static String getProvider(JSONObject headerJSON) {
         try {
             JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
             JSONObject eventObject = (JSONObject) JSONValue.parse(headerObject.get("event").toString());

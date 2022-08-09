@@ -43,38 +43,27 @@ public class TimeStatistic {    // event log가 생성된 시간에 따라 통�
     public void increaseTimeCount(int createAt) {
         if (createAt < 2) {
             gt00++;
-        }
-        else if (createAt < 4) {
+        } else if (createAt < 4) {
             gt02++;
-        }
-        else if (createAt < 6) {
+        } else if (createAt < 6) {
             gt04++;
-        }
-        else if (createAt < 8) {
+        } else if (createAt < 8) {
             gt06++;
-        }
-        else if (createAt < 10) {
+        } else if (createAt < 10) {
             gt08++;
-        }
-        else if (createAt < 12) {
+        } else if (createAt < 12) {
             gt10++;
-        }
-        else if (createAt < 14) {
+        } else if (createAt < 14) {
             gt12++;
-        }
-        else if (createAt < 16) {
+        } else if (createAt < 16) {
             gt14++;
-        }
-        else if (createAt < 18) {
+        } else if (createAt < 18) {
             gt16++;
-        }
-        else if (createAt < 20) {
+        } else if (createAt < 20) {
             gt18++;
-        }
-        else if (createAt < 22) {
+        } else if (createAt < 22) {
             gt20++;
-        }
-        else {
+        } else {
             gt22++;
         }
     }

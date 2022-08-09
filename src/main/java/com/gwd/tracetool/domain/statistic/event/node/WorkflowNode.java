@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class WorkflowNode {
-
     private final String workflowType;
     private int count;
 
@@ -12,7 +11,7 @@ public class WorkflowNode {
         this.workflowType = workflowType;
     }
 
-    public void increaseCount(){
+    public void increaseCount() {
         count++;
     }
 }

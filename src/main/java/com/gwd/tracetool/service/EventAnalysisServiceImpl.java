@@ -11,9 +11,9 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     @Override
     public TimeStatistic calcTime(List<EventModel> eventModels) {
         TimeStatistic stat = new TimeStatistic();
-        for(EventModel model : eventModels){
-            int createAtHour = Integer.parseInt(model.getCreateAt().substring(11,13));
-            System.out.println("hour: "+createAtHour);
+        for (EventModel model : eventModels) {
+            int createAtHour = Integer.parseInt(model.getCreateAt().substring(11, 13));
+            System.out.println("hour: " + createAtHour);
             stat.increaseTimeCount(createAtHour);
         }
         return stat;
@@ -57,7 +57,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     public ProviderStatistic calcProvider(List<EventModel> eventModels) {
         ProviderStatistic stat = new ProviderStatistic();
 
-        for(EventModel model : eventModels){
+        for (EventModel model : eventModels) {
             stat.increaseStat(model.getProvider());
         }
         return stat;

@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class EventNameNode {
-
     private final String eventName;
     private int count;
 

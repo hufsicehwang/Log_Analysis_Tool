@@ -1,9 +1,9 @@
 package com.gwd.tracetool.domain.statistic.event;
+
 import lombok.Getter;
 
 @Getter
-public class DemsHostStatistic {
-
+public class DemsHostStatistic {   // dags log file이 생성된 server host에 따라 통계
     private Integer dems1EventCount;
     private Integer dems2EventCount;
 
