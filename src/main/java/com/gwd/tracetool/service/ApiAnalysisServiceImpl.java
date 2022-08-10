@@ -21,11 +21,11 @@ public class ApiAnalysisServiceImpl implements ApiAnalysisService {
 
     @Override
     public DagsHostStatistic calcDagsHost(List<ApiModel> apiModels) {
-
         DagsHostStatistic stat = new DagsHostStatistic();
+
         for (ApiModel model : apiModels) {
 
-            if (model.getLogOffset() == 1) {
+            if (model.getDagsHost() == 1) {
                 stat.increaseDags1ApiCount();
             } else {
                 stat.increaseDags2ApiCount();

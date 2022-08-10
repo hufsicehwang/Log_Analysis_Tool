@@ -27,7 +27,7 @@ public class ApiParserServiceImpl implements ApiParserService {
     private final ToolProperties toolProperties;
 
     public List readApiList(String date) {
-        int offset = 1;
+        int dagsHost = 1;
         List<ApiModel> list = new ArrayList<ApiModel>();
         String fileName = generateLogfileName(date);
 
@@ -36,14 +36,14 @@ public class ApiParserServiceImpl implements ApiParserService {
                 Paths.get(toolProperties.getDags2LogPath(), fileName)));
 
         for (Path logPath : dagsLogDirPathList) {
-            list.addAll(readApiLogFile(logPath, offset++));
+            list.addAll(readApiLogFile(logPath, dagsHost++));
         }
 
         Collections.sort(list);
         return list;
     }
 
-    private List readApiLogFile(Path path, int logOffset) {
+    private List readApiLogFile(Path path, int dagsHost) {
         List<ApiModel> subList = new ArrayList<ApiModel>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
@@ -66,7 +66,7 @@ public class ApiParserServiceImpl implements ApiParserService {
 
                     ApiModel apiModel = createApiModel(strDate);
                     apiModel.setOccurrenceTime(occurrenceTime);
-                    apiModel.setLogOffset(logOffset);
+                    apiModel.setDagsHost(dagsHost);
                     subList.add(apiModel);
                 }
             }

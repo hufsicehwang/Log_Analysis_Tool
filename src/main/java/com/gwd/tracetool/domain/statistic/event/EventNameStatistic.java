@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class EventNameStatistic {
-
+public class EventNameStatistic {  // event name에 따라 통계
     private final List<EventNameNode> eventNames = new ArrayList<EventNameNode>();
 
     public void increaseStat(String eventName) {

@@ -47,38 +47,27 @@ public class TimeStatistic {    // response 응답 시간에 따라 통계
     public void increaseTimeCount(int msTime) {
         if (msTime < 100) {
             gt100Ms++;
-        }
-        else if (msTime < 500) {
+        } else if (msTime < 500) {
             gt500Ms++;
-        }
-        else if (msTime < 1000) {
+        } else if (msTime < 1000) {
             gt1000Ms++;
-        }
-        else if (msTime < 1000 * 5) {
+        } else if (msTime < 1000 * 5) {
             gt5s++;
-        }
-        else if (msTime < 1000 * 10) {
+        } else if (msTime < 1000 * 10) {
             gt10s++;
-        }
-        else if (msTime < 1000 * 30) {
+        } else if (msTime < 1000 * 30) {
             gt30s++;
-        }
-        else if (msTime < 1000 * 60) {
+        } else if (msTime < 1000 * 60) {
             gt60s++;
-        }
-        else if (msTime < 1000 * 120) {
+        } else if (msTime < 1000 * 120) {
             gt120s++;
-        }
-        else if (msTime < 1000 * 300) {
+        } else if (msTime < 1000 * 300) {
             gt300s++;
-        }
-        else if (msTime < 1000 * 600) {
+        } else if (msTime < 1000 * 600) {
             gt600s++;
-        }
-        else if (msTime < 1000 * 1200) {
+        } else if (msTime < 1000 * 1200) {
             gt1200s++;
-        }
-        else {
+        } else {
             le1200s++;
         }
     }

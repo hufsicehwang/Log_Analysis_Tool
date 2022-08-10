@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class EventParserServiceImpl implements EventParserService {
     @Override
     public List readEventList(String date) {
 
-        int fileCreatedServer = 1;
+        int demsHost = 1;
         List<EventModel> list = new ArrayList<EventModel>();
         String fileName = generateFileName(date);
 
@@ -41,13 +42,13 @@ public class EventParserServiceImpl implements EventParserService {
                 Paths.get(toolProperties.getDems2LogPath(), fileName)));
 
         for (Path logPath : dagsLogDirPathList) {
-            list.addAll(readEventLogFile(logPath, fileCreatedServer++));
+            list.addAll(readEventLogFile(logPath, demsHost++));
         }
 
         return list;
     }
 
-    private List readEventLogFile(Path path, int fileCreatedServer) {
+    private List readEventLogFile(Path path, int demsHost) {
         List<EventModel> list = new ArrayList<EventModel>();
         JSONObject headerJSON = new JSONObject();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -61,19 +62,16 @@ public class EventParserServiceImpl implements EventParserService {
 
             while ((line = br.readLine()) != null) {
                 if (line.contains(queueRecord)) {
-
                     int i = line.indexOf(token) + token.length();
-                    if (i != -1) {
 
+                    if (i != -1) {
                         LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                         String subStr = line.substring(i);
-
                         headerJSON = stringToJSON(subStr);
                         EventModel eventModel = createEventModel(headerJSON);
                         eventModel.setOccurrenceTime(occurrenceTime);
-                        eventModel.setFileCreatedServer(fileCreatedServer);
+                        eventModel.setDemsHost(demsHost);
                         list.add(eventModel);
-
                     }
                 }
             }
@@ -85,16 +83,33 @@ public class EventParserServiceImpl implements EventParserService {
     }
 
     private EventModel createEventModel(JSONObject headerJson) {
-        System.out.println("value : " + JSONUtils.getEventName(headerJson));
         String eventName = JSONUtils.getEventName(headerJson);
+        String workflowType = JSONUtils.getWorkflowType(headerJson);
+        String createAt = JSONUtils.getCreateAt(headerJson);
+        String provider = JSONUtils.getProvider(headerJson);
 
-        return EventModel.builder().eventName(eventName).build();
+        return EventModel.builder()
+                .eventName(eventName)
+                .workflowType(workflowType)
+                .createAt(createAt)
+                .provider(provider)
+                .build();
     }
 
     private String generateFileName(String date) {
-        // example : dems_feign.2022-07-14.log
-
-        return String.format("dems.%s.log", date);
+        // example : dems.2022-07-14.log
+        try {
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormatParser.setLenient(false);
+            // 대상 인자 검증
+            dateFormatParser.parse(date);
+            return String.format("dems.%s.log", date);
+        } catch (Exception e) {
+            String yyyy = date.substring(0, 4);
+            String mm = date.substring(4, 6);
+            String dd = date.substring(6, 8);
+            return String.format("dems.%s-%s-%s.log", yyyy, mm, dd);
+        }
     }
 
     private JSONObject stringToJSON(String strValue) {

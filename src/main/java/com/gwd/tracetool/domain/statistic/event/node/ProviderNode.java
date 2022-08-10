@@ -3,12 +3,12 @@ package com.gwd.tracetool.domain.statistic.event.node;
 import lombok.Getter;
 
 @Getter
-public class EventNameNode {
-    private final String eventName;
+public class ProviderNode {
+    private final String provider;
     private int count;
 
-    public EventNameNode(String eventName) {
-        this.eventName = eventName;
+    public ProviderNode(String provider) {
+        this.provider = provider;
     }
 
     public void increaseCount() {
