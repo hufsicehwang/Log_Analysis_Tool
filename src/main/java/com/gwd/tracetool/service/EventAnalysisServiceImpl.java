@@ -1,5 +1,6 @@
 package com.gwd.tracetool.service;
 
+import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
 import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
@@ -85,6 +86,17 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
 
         for (EventModel model : eventModels) {
             stat.increaseStat(model.getProvider());
+        }
+        return stat;
+    }
+
+    @Override
+    public ErrorStatistic calcError(List<ErrorEventModel> errorEventModels) {
+        ErrorStatistic stat = new ErrorStatistic();
+
+        for (ErrorEventModel model : errorEventModels) {
+            stat.increaseErrorNameStat(model.getErrorName());
+            //stat.increaseFailEventStat(model.getFailEventName());
         }
         return stat;
     }

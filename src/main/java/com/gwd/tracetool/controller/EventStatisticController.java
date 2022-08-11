@@ -1,6 +1,7 @@
 package com.gwd.tracetool.controller;
 
 import com.gwd.tracetool.domain.ApiModel;
+import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
 import com.gwd.tracetool.service.EventAnalysisService;
@@ -25,7 +26,7 @@ public class EventStatisticController {
     }
 
     @GetMapping("/api/analysis/dems-log/event-name")
-    public EventNameStatistic parseDagsLog(@RequestParam String date) {
+    public EventNameStatistic calcEventName(@RequestParam String date) {
         return eventAnalysisService.calcEventName(eventParserService.readEventList(date));
     }
 
@@ -52,6 +53,11 @@ public class EventStatisticController {
     @GetMapping("/api/analysis/dems-log/provider")
     public ProviderStatistic calcProvider(@RequestParam String date) {
         return eventAnalysisService.calcProvider(eventParserService.readEventList(date));
+    }
+
+    @GetMapping("/api/analysis/dems-log/error")
+    public List<ErrorEventModel> listUpError(@RequestParam String date) {
+        return eventParserService.readErrorEventList(date);
     }
 
 
