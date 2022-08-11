@@ -18,9 +18,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -45,33 +47,37 @@ public class EventParserServiceImpl implements EventParserService {
             list.addAll(readEventLogFile(logPath, demsHost++));
         }
 
+        Collections.sort(list);
         return list;
     }
 
     private List readEventLogFile(Path path, int demsHost) {
         List<EventModel> list = new ArrayList<EventModel>();
         JSONObject headerJSON = new JSONObject();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         File file = new File(path.toString());
-
-        String queueRecord = "receive message propertioes: MessageProperties";
-        String token = "receivemessage: ";
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
+            String token = "receivemessage: ";
+            String queueRecord = "receive message propertioes: MessageProperties";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
 
             while ((line = br.readLine()) != null) {
                 if (line.contains(queueRecord)) {
-                    int i = line.indexOf(token) + token.length();
 
+                    int i = line.indexOf(token) + token.length();
                     if (i != -1) {
+
                         LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                         String subStr = line.substring(i);
+
                         headerJSON = stringToJSON(subStr);
                         EventModel eventModel = createEventModel(headerJSON);
                         eventModel.setOccurrenceTime(occurrenceTime);
                         eventModel.setDemsHost(demsHost);
                         list.add(eventModel);
+
                     }
                 }
             }
@@ -84,32 +90,34 @@ public class EventParserServiceImpl implements EventParserService {
 
     private EventModel createEventModel(JSONObject headerJson) {
         String eventName = JSONUtils.getEventName(headerJson);
+        String transactionId = JSONUtils.getTransactionId(headerJson);
         String workflowType = JSONUtils.getWorkflowType(headerJson);
         String createAt = JSONUtils.getCreateAt(headerJson);
         String provider = JSONUtils.getProvider(headerJson);
 
+        ZonedDateTime createAtZonedTime = ZonedDateTime.parse(createAt);
+        LocalDateTime createAtLocalTime = createAtZonedTime.toLocalDateTime();
+
         return EventModel.builder()
                 .eventName(eventName)
+                .transactionId(transactionId)
                 .workflowType(workflowType)
-                .createAt(createAt)
                 .provider(provider)
+                .createAt(createAtLocalTime)
                 .build();
     }
 
     private String generateFileName(String date) {
         // example : dems.2022-07-14.log
+        SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormatParser.setLenient(false);
         try {
-            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
-            dateFormatParser.setLenient(false);
             // 대상 인자 검증
             dateFormatParser.parse(date);
-            return String.format("dems.%s.log", date);
-        } catch (Exception e) {
-            String yyyy = date.substring(0, 4);
-            String mm = date.substring(4, 6);
-            String dd = date.substring(6, 8);
-            return String.format("dems.%s-%s-%s.log", yyyy, mm, dd);
+        } catch (java.text.ParseException e) {
+            log.info("Fail to parse log : log-path={}, stack-trace={}", date, new Throwable().getStackTrace());
         }
+        return String.format("dems.%s.log", date);
     }
 
     private JSONObject stringToJSON(String strValue) {

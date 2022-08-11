@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -45,13 +46,12 @@ public class ApiParserServiceImpl implements ApiParserService {
 
     private List readApiLogFile(Path path, int dagsHost) {
         List<ApiModel> subList = new ArrayList<ApiModel>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-
         File file = new File(path.toString());
-        String queueRecord = "[Feign Response] ";
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
+            String queueRecord = "[Feign Response] ";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
             while ((line = br.readLine()) != null) {
                 if (!line.contains(queueRecord)) {
@@ -100,6 +100,14 @@ public class ApiParserServiceImpl implements ApiParserService {
 
     private String generateLogfileName(String date) {
         // example : dags_feign.2022-07-14.log
+        SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormatParser.setLenient(false);
+        try {
+            // 대상 인자 검증
+            dateFormatParser.parse(date);
+        } catch (java.text.ParseException e) {
+            log.info("Fail to parse log : log-path={}, stack-trace={}", date, new Throwable().getStackTrace());
+        }
         return String.format("dags_feign.%s.log", date);
     }
 

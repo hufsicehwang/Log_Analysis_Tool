@@ -49,4 +49,14 @@ public class JSONUtils {
         }
     }
 
+    public static String getTransactionId(JSONObject headerJSON) {
+        JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
+        try {
+            JSONObject workflowObject = (JSONObject) JSONValue.parse(headerObject.get("workflow").toString());
+            return workflowObject.get("transactionId").toString();
+        } catch (NullPointerException e) {
+            return "NoTransactionId";
+        }
+    }
+
 }

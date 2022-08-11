@@ -2,6 +2,8 @@ package com.gwd.tracetool.service;
 
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
+import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
+import com.gwd.tracetool.domain.statistic.event.node.WorkflowNode;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,8 +14,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     public TimeStatistic calcTime(List<EventModel> eventModels) {
         TimeStatistic stat = new TimeStatistic();
         for (EventModel model : eventModels) {
-            int createAtHour = Integer.parseInt(model.getCreateAt().substring(11, 13));
-            System.out.println("hour: " + createAtHour);
+            int createAtHour = model.getCreateAt().getHour();
             stat.increaseTimeCount(createAtHour);
         }
         return stat;
@@ -46,9 +47,27 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     @Override
     public WorkflowStatistic calcWorkflow(List<EventModel> eventModels) {
         WorkflowStatistic stat = new WorkflowStatistic();
+        List<TransactionNode> transactions = calcTransactionId(eventModels).getTransactions();
+
+        for (TransactionNode model : transactions) {
+            stat.increaseStat(model);
+        }
+
+        for (WorkflowNode node : stat.getWorkflows()) {
+            node.setAvgMms(node.getTotalMms() / node.getCount());
+        }
+        return stat;
+    }
+
+    private TransactionStatistic calcTransactionId(List<EventModel> eventModels) {
+        TransactionStatistic stat = new TransactionStatistic();
 
         for (EventModel model : eventModels) {
-            stat.increaseStat(model.getWorkflowType());
+            stat.increaseStat(model);
+        }
+
+        for (TransactionNode node : stat.getTransactions()) {
+            node.setConsumeTime(node.getStartTime(), node.getEndTime());
         }
         return stat;
     }
