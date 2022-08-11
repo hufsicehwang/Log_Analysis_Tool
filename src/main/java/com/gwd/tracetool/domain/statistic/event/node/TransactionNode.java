@@ -44,9 +44,9 @@ public class TransactionNode {
         }
     }
 
-    public void setConsumeTime(LocalDateTime startTime, LocalDateTime endTime) {
+    public void setConsumeMs(LocalDateTime startTime, LocalDateTime endTime) {
         Duration duration = Duration.between(startTime, endTime);
-        long calcMs =  TimeUnit.MILLISECONDS.convert(duration);
+        long calcMs = TimeUnit.MILLISECONDS.convert(duration);
         this.consumeMs = calcMs;
     }
 }

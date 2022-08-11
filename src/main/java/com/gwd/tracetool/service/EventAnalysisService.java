@@ -15,6 +15,9 @@ public interface EventAnalysisService {
 
     WorkflowStatistic calcWorkflow(List<EventModel> eventModels);
 
+    ConsumeTimeStatistic calcConsumeTime(List<EventModel> eventModels);
+
     ProviderStatistic calcProvider(List<EventModel> eventModels);
+
 
 }

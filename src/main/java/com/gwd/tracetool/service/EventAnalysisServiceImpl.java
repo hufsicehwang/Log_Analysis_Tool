@@ -47,7 +47,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     @Override
     public WorkflowStatistic calcWorkflow(List<EventModel> eventModels) {
         WorkflowStatistic stat = new WorkflowStatistic();
-        List<TransactionNode> transactions = calcTransactionId(eventModels).getTransactions();
+        List<TransactionNode> transactions = calcTransaction(eventModels).getTransactions();
 
         for (TransactionNode model : transactions) {
             stat.increaseStat(model);
@@ -59,7 +59,18 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         return stat;
     }
 
-    private TransactionStatistic calcTransactionId(List<EventModel> eventModels) {
+    @Override
+    public ConsumeTimeStatistic calcConsumeTime(List<EventModel> eventModels) {
+        ConsumeTimeStatistic stat = new ConsumeTimeStatistic();
+        List<TransactionNode> transactions = calcTransaction(eventModels).getTransactions();
+
+        for (TransactionNode node : transactions) {
+            stat.increaseConsumeTimeCount((int) node.getConsumeMs());
+        }
+        return stat;
+    }
+
+    private TransactionStatistic calcTransaction(List<EventModel> eventModels) {
         TransactionStatistic stat = new TransactionStatistic();
 
         for (EventModel model : eventModels) {
@@ -67,7 +78,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         }
 
         for (TransactionNode node : stat.getTransactions()) {
-            node.setConsumeTime(node.getStartTime(), node.getEndTime());
+            node.setConsumeMs(node.getStartTime(), node.getEndTime());
         }
         return stat;
     }

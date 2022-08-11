@@ -94,6 +94,7 @@ public class EventParserServiceImpl implements EventParserService {
         String workflowType = JSONUtils.getWorkflowType(headerJson);
         String createAt = JSONUtils.getCreateAt(headerJson);
         String provider = JSONUtils.getProvider(headerJson);
+        String httpStatusCode = JSONUtils.getHttpStatusCode(headerJson);
 
         ZonedDateTime createAtZonedTime = ZonedDateTime.parse(createAt);
         LocalDateTime createAtLocalTime = createAtZonedTime.toLocalDateTime();
@@ -103,6 +104,7 @@ public class EventParserServiceImpl implements EventParserService {
                 .transactionId(transactionId)
                 .workflowType(workflowType)
                 .provider(provider)
+                .httpStatusCode(httpStatusCode)
                 .createAt(createAtLocalTime)
                 .build();
     }

@@ -50,12 +50,22 @@ public class JSONUtils {
     }
 
     public static String getTransactionId(JSONObject headerJSON) {
-        JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
         try {
+            JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
             JSONObject workflowObject = (JSONObject) JSONValue.parse(headerObject.get("workflow").toString());
             return workflowObject.get("transactionId").toString();
         } catch (NullPointerException e) {
             return "NoTransactionId";
+        }
+    }
+
+    public static String getHttpStatusCode(JSONObject headerJSON) {
+        try {
+            JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
+            JSONObject amqResponseInfoObject = (JSONObject) JSONValue.parse(headerObject.get("amqResponseInfo").toString());
+            return amqResponseInfoObject.get("httpStatusCode").toString();
+        } catch (NullPointerException e) {
+            return "NoHttpStatusCode";
         }
     }
 
