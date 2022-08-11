@@ -9,8 +9,8 @@ import java.util.List;
 public class WorkflowNode {
     private final String workflowType;
     private int count;
-    private long totalMms;
-    private long avgMms;
+    private long totalMs;
+    private long avgMs;
     private final List<TransactionNode> transactionIds = new ArrayList<TransactionNode>();
 
     public WorkflowNode(String workflowType) {
@@ -23,14 +23,14 @@ public class WorkflowNode {
 
     public void addTransaction(TransactionNode node) {
         transactionIds.add(node);
-        increaseTotalTime(node.getConsumeMms());
+        increaseTotalTime(node.getConsumeMs());
     }
 
     private void increaseTotalTime(long consumeMms) {
-        totalMms += consumeMms;
+        totalMs += consumeMms;
     }
 
-    public void setAvgMms(long avgMms) {
-        this.avgMms = avgMms;
+    public void setAvgMs(long avgMs) {
+        this.avgMs = avgMs;
     }
 }

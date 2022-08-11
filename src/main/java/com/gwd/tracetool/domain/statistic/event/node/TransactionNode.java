@@ -15,7 +15,7 @@ public class TransactionNode {
     private final String workflowType;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private long consumeMms;
+    private long consumeMs;
     private final List<String> events = new ArrayList<String>();
 
     public TransactionNode(String transactionId, String workflowType, LocalDateTime startTime, LocalDateTime endTime) {
@@ -46,7 +46,7 @@ public class TransactionNode {
 
     public void setConsumeTime(LocalDateTime startTime, LocalDateTime endTime) {
         Duration duration = Duration.between(startTime, endTime);
-        long calcMms =  TimeUnit.MILLISECONDS.convert(duration);
-        this.consumeMms = calcMms;
+        long calcMs =  TimeUnit.MILLISECONDS.convert(duration);
+        this.consumeMs = calcMs;
     }
 }
