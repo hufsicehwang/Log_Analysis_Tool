@@ -25,11 +25,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         DemsHostStatistic stat = new DemsHostStatistic();
 
         for (EventModel model : eventModels) {
-            if (model.getDemsHost() == 1) {
-                stat.increaseDems1EventCount();
-            } else {
-                stat.increaseDems2EventCount();
-            }
+            stat.increaseStat(model.getDemsHost());
         }
         return stat;
     }
