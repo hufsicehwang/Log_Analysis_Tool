@@ -1,5 +1,6 @@
 package com.gwd.tracetool.service;
 
+import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
 
@@ -15,6 +16,10 @@ public interface EventAnalysisService {
 
     WorkflowStatistic calcWorkflow(List<EventModel> eventModels);
 
+    ConsumeTimeStatistic calcConsumeTime(List<EventModel> eventModels);
+
     ProviderStatistic calcProvider(List<EventModel> eventModels);
+
+    ErrorStatistic calcError(List<ErrorEventModel> errorEventModels);
 
 }
