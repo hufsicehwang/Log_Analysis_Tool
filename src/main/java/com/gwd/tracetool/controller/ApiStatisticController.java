@@ -5,10 +5,10 @@ import com.gwd.tracetool.domain.statistic.api.*;
 import com.gwd.tracetool.service.ApiAnalysisService;
 import com.gwd.tracetool.service.ApiParserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -32,8 +32,10 @@ public class ApiStatisticController {
         return apiAnalysisService.calcDestinationHost(apiParserService.readApiList(date));
     }
 
-    @GetMapping("/api/analysis/dags-log/status-code")
-    public StatusCodeStatistic calcStatusCode(@RequestParam String date) {
+    @RequestMapping("/api/analysis/dags-log/status-code")
+    public StatusCodeStatistic calcStatusCode(@RequestParam String date, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute("session",date);
         return apiAnalysisService.calcStatusCode(apiParserService.readApiList(date));
     }
 

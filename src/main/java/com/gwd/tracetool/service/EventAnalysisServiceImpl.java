@@ -108,7 +108,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         ErrorStatistic stat = new ErrorStatistic();
 
         for (ErrorEventModel model : errorEventModels) {
-            stat.increaseErrorNameStat(model.getErrorName());
+            stat.increaseStat(model);
         }
         return stat;
     }

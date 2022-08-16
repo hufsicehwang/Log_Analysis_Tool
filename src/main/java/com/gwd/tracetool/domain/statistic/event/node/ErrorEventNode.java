@@ -2,7 +2,9 @@ package com.gwd.tracetool.domain.statistic.event.node;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class ErrorEventNode {
 
     private final String errorName;
@@ -18,12 +20,20 @@ public class ErrorEventNode {
         this.failEventName = failEventName;
     }
 
-    public void addErrorName(String errorName){
-        for(String str:events){
-            if(str.equals(errorName)){
+    public void addErrorName(String errorName) {
+        for (String str : events) {
+            if (str.equals(errorName)) {
                 return;
             }
         }
         events.add(errorName);
+    }
+
+    public void increaseErrNameCount() {
+        errorNameCount++;
+    }
+
+    public void increaseFailNameCount() {
+        failEventNameCount++;
     }
 }
