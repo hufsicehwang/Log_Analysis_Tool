@@ -1,36 +1,36 @@
 package com.gwd.tracetool.domain.statistic.event;
 
-import com.gwd.tracetool.domain.statistic.event.node.EventNameNode;
+import com.gwd.tracetool.domain.ErrorEventModel;
+import com.gwd.tracetool.domain.statistic.event.node.ErrorEventNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ErrorStatistic {
 
-    private final List<EventNameNode> errorNameNodes = new ArrayList<EventNameNode>();
-    //private final List<EventNameNode> failEventNameNodes = new ArrayList<EventNameNode>();
+    private final List<ErrorEventNode> errorNameNodes = new ArrayList<ErrorEventNode>();
 
-    public void increaseErrorNameStat(String errorName){
-        for (EventNameNode errorNameNode : errorNameNodes){
-            if(errorNameNode.getEventName().equals(errorName)){
-                errorNameNode.increaseCount();
+
+    public void increaseStat(ErrorEventModel models){
+        for (ErrorEventNode node : errorNameNodes){
+            if(node.getErrorName().equals(models.getErrorName())){
+                node.increaseErrNameCount();
                 return;
             }
         }
-        EventNameNode errorNode = new EventNameNode(errorName);
-        errorNode.increaseCount();
-        errorNameNodes.add(errorNode);
+        ErrorEventNode node = new ErrorEventNode(models.getErrorName(), models.getFailEventName());
+        errorNameNodes.add(node);
     }
 //    public void increaseFailEventStat(String failEventName){
-//        for (EventNameNode failEvenNode : failEventNameNodes){
+//        for (ErrorEventNode failEvenNode : failErrorEventNodes){
 //            if(failEvenNode.getEventName().equals(failEventName)){
 //                failEvenNode.increaseCount();
 //                return;
 //            }
 //        }
-//        EventNameNode failNode = new EventNameNode(failEventName);
+//        ErrorEventNode failNode = new ErrorEventNode(failEventName);
 //        failNode.increaseCount();
-//        failEventNameNodes.add(failNode);
+//        failErrorEventNodes.add(failNode);
 //    }
 
 }

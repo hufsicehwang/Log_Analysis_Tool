@@ -1,6 +1,7 @@
 package com.gwd.tracetool.controller;
 
-import com.gwd.tracetool.domain.ApiModel;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
@@ -10,10 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.model.IModel;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class EventStatisticController {
 
@@ -25,9 +27,19 @@ public class EventStatisticController {
         return eventParserService.readEventList(date);
     }
 
+//    @GetMapping("/api/analysis/dems-log/event-name")
+//    public EventNameStatistic calcEventName(@RequestParam String date) {
+//        return eventAnalysisService.calcEventName(eventParserService.readEventList(date));
+//    }
     @GetMapping("/api/analysis/dems-log/event-name")
-    public EventNameStatistic calcEventName(@RequestParam String date) {
-        return eventAnalysisService.calcEventName(eventParserService.readEventList(date));
+    public String calcEventName(@RequestParam String date, Model model) {
+        EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(date));
+        for(int i =0; i<stat.getEventNames().size();i++){
+            System.out.println("event name : "+stat.getEventNames().get(i).getEventName());
+        }
+
+        model.addAttribute("data",stat);
+        return "tables";
     }
 
     @GetMapping("/api/analysis/dems-log/workflow")

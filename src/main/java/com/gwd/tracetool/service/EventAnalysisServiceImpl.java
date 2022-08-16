@@ -26,7 +26,11 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         DemsHostStatistic stat = new DemsHostStatistic();
 
         for (EventModel model : eventModels) {
-            stat.increaseStat(model.getDemsHost());
+            if (model.getDemsHost() == 1) {
+                stat.increaseDems1EventCount();
+            } else {
+                stat.increaseDems2EventCount();
+            }
         }
         return stat;
     }
@@ -95,7 +99,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         ErrorStatistic stat = new ErrorStatistic();
 
         for (ErrorEventModel model : errorEventModels) {
-            stat.increaseErrorNameStat(model.getErrorName());
+            stat.increaseStat(model);
             //stat.increaseFailEventStat(model.getFailEventName());
         }
         return stat;
