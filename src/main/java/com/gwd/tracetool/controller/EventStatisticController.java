@@ -1,9 +1,9 @@
 package com.gwd.tracetool.controller;
 
-import com.gwd.tracetool.domain.ApiModel;
 import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
+import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
 import com.gwd.tracetool.service.EventAnalysisService;
 import com.gwd.tracetool.service.EventParserService;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +60,9 @@ public class EventStatisticController {
         return eventParserService.readErrorEventList(date);
     }
 
+    @GetMapping("/api/analysis/dems-log/search-transactionId")
+    public TransactionNode inquireTransaction(@RequestParam("date") String date, @RequestParam("id") String id) {
+        return eventAnalysisService.searchTransaction(eventParserService.readEventList(date), id);
+    }
 
 }
