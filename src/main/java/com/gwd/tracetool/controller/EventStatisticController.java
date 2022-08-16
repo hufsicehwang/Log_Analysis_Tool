@@ -34,10 +34,6 @@ public class EventStatisticController {
     @GetMapping("/api/analysis/dems-log/event-name")
     public String calcEventName(@RequestParam String date, Model model) {
         EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(date));
-        for(int i =0; i<stat.getEventNames().size();i++){
-            System.out.println("event name : "+stat.getEventNames().get(i).getEventName());
-        }
-
         model.addAttribute("data",stat);
         return "tables";
     }
