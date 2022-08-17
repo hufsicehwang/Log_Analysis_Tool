@@ -7,3 +7,12 @@ tools:
     dems2: C:\Users\User\Desktop\log\dems2\trace
     dems1-error: C:\Users\User\Desktop\log\dems1\error\
     dems2-error: C:\Users\User\Desktop\log\dems2\error\
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+  thymeleaf:
+    cache: false

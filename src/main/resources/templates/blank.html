@@ -42,7 +42,7 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                Select file date
+                <div class="topBar-text1">Select file date</div> <div class="topBar-text2">Selected file date : <span th:text="${session.fileDate}"></span></div>
             </nav>
             <!-- End of Topbar -->
 
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="btn-section">
-                        <button class="calendar-btn">Check Statistic</button>
+                        <button type="button" class="calendar-btn">Check Statistic</button>
                     </div>
                 </div>
             </div>

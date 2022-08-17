@@ -270,7 +270,7 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="API:${data.getEventNames()}">
-                                            <td th:text =${API.getEventName()}></td>
+                                            <td th:text =${API.getEventName()} class="eventName"></td>
                                             <td th:text =${API.getCount()}></td>
                                         </tr>
                                     </tbody>

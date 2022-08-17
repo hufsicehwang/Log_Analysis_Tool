@@ -20,6 +20,7 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.24'
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'org.projectlombok:lombok'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
 }
 
 tasks.named('test') {

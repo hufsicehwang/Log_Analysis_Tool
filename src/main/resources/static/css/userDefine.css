@@ -9,6 +9,13 @@
     font-size: 25px;
     color: black;
 }
+.topBar-text2, .topBar-text1{
+    display:inline;
+}
+.topBar-text2{
+    position:absolute;
+    right:1rem;
+}
 .left-img{
     background-image: url(/img/5130169.jpg) ;
     background-size: cover;

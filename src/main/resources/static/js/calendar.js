@@ -95,9 +95,9 @@ function calendarInit() {
         addClickEvent();
     });
 
-    // $('.day').on('click',function () {
-    //     document.querySelector('.current').style.background = 'gray';
-    // })
+
+
+     let fileDate = 0;
 
     function clearBackground(){
         let days=  document.querySelectorAll('.current');
@@ -126,6 +126,37 @@ function calendarInit() {
         return document.querySelector('.year-month').innerText;
     }
 
-    let fileDate = 0;
+    document.querySelector('.calendar-btn').addEventListener("click",sendDate);
+
+
+    function sendDate(){
+        console.log("post 요청!");
+//            let form = document.createElement('form');
+//            form.setAttribute('method','post');
+//            form.setAttribute('action','/home/select-date');
+//            let dataInput = document.createElement('input');
+//            dataInput.setAttribute('type','text');
+//            dataInput.setAttribute('name','fileDate');
+//            dataInput.setAttribute('id','fileDate');
+//            dataInput.setAttribute('value',fileDate);
+//            document.body.appendChild(form);
+//            form.submit();
+        $.ajax({
+            type:'post',
+            url:'/home/select-date',
+            data:{
+                date : fileDate
+            },
+            success:function(){
+                console.log("success");
+            },
+            error:function(){
+                console.log("file does not exist");
+            }
+        })
+
+
+        }
+
 
 }
