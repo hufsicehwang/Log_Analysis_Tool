@@ -64,14 +64,16 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>EventName</th>
+                                            <th>APIName</th>
                                             <th>Count</th>
+                                            <th>AvgTime</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="EVENT:${data.getEventNames()}">
-                                            <td th:text =${EVENT.getEventName()} class="eventName"></td>
-                                            <td th:text =${EVENT.getCount()}></td>
+                                        <tr th:each="API:${data.getTypes()}">
+                                            <td th:text =${API.getType()} class="APIName"></td>
+                                            <td th:text =${API.getCount()}></td>
+                                            <td th:text =${API.getAvgTime()}></td>
                                         </tr>
                                     </tbody>
                                 </table>

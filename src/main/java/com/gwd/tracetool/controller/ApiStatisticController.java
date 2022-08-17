@@ -5,47 +5,68 @@ import com.gwd.tracetool.domain.statistic.api.*;
 import com.gwd.tracetool.service.ApiAnalysisService;
 import com.gwd.tracetool.service.ApiParserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class ApiStatisticController {
     private final ApiParserService apiParserService;
     private final ApiAnalysisService apiAnalysisService;
 
     @GetMapping("/api/parse/dags-log")
-    public List<ApiModel> parseDagsLog(@RequestParam String date) {
-        return apiParserService.readApiList(date);
+    public List<ApiModel> parseDagsLog(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        return apiParserService.readApiList(session.getAttribute("fileDate").toString());
     }
 
     @GetMapping("/api/analysis/dags-log/time-consume")
-    public TimeStatistic calcTime(@RequestParam String date) {
-        return apiAnalysisService.calcTime(apiParserService.readApiList(date));
+    public String calcTime(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        TimeStatistic stat = apiAnalysisService.calcTime(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "tables";
     }
 
     @GetMapping("/api/analysis/dags-log/destination-host")
-    public DestinationHostStatistic calcDestinationHost(@RequestParam String date) {
-        return apiAnalysisService.calcDestinationHost(apiParserService.readApiList(date));
+    public String calcDestinationHost(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        DestinationHostStatistic stat = apiAnalysisService.calcDestinationHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "tables";
     }
 
     @RequestMapping("/api/analysis/dags-log/status-code")
-    public StatusCodeStatistic calcStatusCode(@RequestParam String date, HttpServletRequest request) {
+    public String calcStatusCode(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
-        session.setAttribute("session",date);
-        return apiAnalysisService.calcStatusCode(apiParserService.readApiList(date));
+        StatusCodeStatistic stat = apiAnalysisService.calcStatusCode(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "tables";
     }
 
     @GetMapping("/api/analysis/dags-log/dags-host")
-    public DagsHostStatistic calcDagsHost(@RequestParam String date) {
-        return apiAnalysisService.calcDagsHost(apiParserService.readApiList(date));
+    public String calcDagsHost(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "tables";
     }
 
     @GetMapping("/api/analysis/dags-log/api-type")
-    public TypeStatistic calcType(@RequestParam String date) {
-        return apiAnalysisService.calcType(apiParserService.readApiList(date));
+    public String calcType(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        TypeStatistic stat = apiAnalysisService.calcType(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+
+        System.out.println("statistic success");
+        System.out.println(stat.getTypes().get(0).getType());
+        System.out.println(stat.getTypes().get(0).getCount());
+        System.out.println(stat.getTypes().get(0).getAvgTime());
+        return "ApiTypeTable";
     }
 }

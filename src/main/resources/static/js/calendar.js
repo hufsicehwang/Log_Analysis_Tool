@@ -110,7 +110,7 @@ function calendarInit() {
         clearBackground();
         event.target.style.background = '#ced4da';
         fileDate = event.target.innerText;
-        fileDate = getYearmonth().replace('.','-')+'-'+fileDate;
+        fileDate = getYearMonth() +'-'+fileDate;
         console.log(fileDate);
     }
     function addClickEvent(){
@@ -122,8 +122,16 @@ function calendarInit() {
     }
     addClickEvent();
 
-    function getYearmonth(){
-        return document.querySelector('.year-month').innerText;
+    function getYearMonth(){
+        let yearMonthStr = document.querySelector('.year-month').innerText;
+        yearMonth = yearMonthStr.split('.');
+        if(yearMonth[1]<10){
+            yearMonthStr = yearMonth[0] + '-' + '0' + yearMonth[1];
+        }
+        else{
+            yearMonthStr = yearMonth[0] + '-' + yearMonth[1];
+        }
+        return yearMonthStr;
     }
 
     document.querySelector('.calendar-btn').addEventListener("click",sendDate);
@@ -149,6 +157,7 @@ function calendarInit() {
             },
             success:function(){
                 console.log("success");
+                window.location.href = '/api/analysis/dags-log/api-type';
             },
             error:function(){
                 console.log("file does not exist");

@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -70,10 +67,11 @@ public class ApiParserServiceImpl implements ApiParserService {
                     subList.add(apiModel);
                 }
             }
-        } catch (IOException e) {
+        } catch (FileNotFoundException e){
+            System.out.println("file does not exist!");
+        }catch (IOException e) {
             log.info("Fail to parse log : log-path={}, stack-trace={}", path, new Throwable().getStackTrace());
         }
-
         return subList;
     }
 
@@ -99,6 +97,7 @@ public class ApiParserServiceImpl implements ApiParserService {
     }
 
     private String generateLogfileName(String date) {
+        System.out.println("in parser date : "+date);
         // example : dags_feign.2022-07-14.log
         SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
         dateFormatParser.setLenient(false);
