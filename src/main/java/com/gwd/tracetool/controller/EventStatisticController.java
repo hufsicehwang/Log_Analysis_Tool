@@ -1,22 +1,19 @@
 package com.gwd.tracetool.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
-import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
 import com.gwd.tracetool.service.EventAnalysisService;
 import com.gwd.tracetool.service.EventParserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.model.IModel;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class EventStatisticController {
 
@@ -31,11 +28,8 @@ public class EventStatisticController {
     @GetMapping("/api/analysis/dems-log/event-name")
     public String calcEventName(@RequestParam String date, Model model) {
         EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(date));
-        for(int i =0; i<stat.getEventNames().size();i++){
-            System.out.println("event name : "+stat.getEventNames().get(i).getEventName());
-        }
 
-        model.addAttribute("data",stat);
+        model.addAttribute("data", stat);
         return "tables";
     }
 
@@ -45,7 +39,7 @@ public class EventStatisticController {
     }
 
     @GetMapping("/api/analysis/dems-log/dems-host")
-    public DemsHostStatistic calcDemsHost(@RequestParam String date) {
+    public DemsHostStatistic calcDemsHost(@RequestParam String date, Model model) {
         return eventAnalysisService.calcDemsHost(eventParserService.readEventList(date));
     }
 
@@ -69,9 +63,5 @@ public class EventStatisticController {
         return eventParserService.readErrorEventList(date);
     }
 
-    @GetMapping("/api/analysis/dems-log/search-transactionId")
-    public TransactionNode inquireTransaction(@RequestParam("date") String date, @RequestParam("id") String id) {
-        return eventAnalysisService.searchTransaction(eventParserService.readEventList(date), id);
-    }
 
 }
