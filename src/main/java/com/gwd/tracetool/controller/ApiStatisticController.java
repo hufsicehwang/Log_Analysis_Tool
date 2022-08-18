@@ -15,17 +15,12 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/api/analysis/dags-log")
 public class ApiStatisticController {
     private final ApiParserService apiParserService;
     private final ApiAnalysisService apiAnalysisService;
 
-    @GetMapping("/api/parse/dags-log")
-    public List<ApiModel> parseDagsLog(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        return apiParserService.readApiList(session.getAttribute("fileDate").toString());
-    }
-
-    @GetMapping("/api/analysis/dags-log/time-consume")
+    @GetMapping("/time-consume")
     public String calcTime(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         TimeStatistic stat = apiAnalysisService.calcTime(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
@@ -33,7 +28,7 @@ public class ApiStatisticController {
         return "tables";
     }
 
-    @GetMapping("/api/analysis/dags-log/destination-host")
+    @GetMapping("/destination-host")
     public String calcDestinationHost(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         DestinationHostStatistic stat = apiAnalysisService.calcDestinationHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
@@ -41,7 +36,7 @@ public class ApiStatisticController {
         return "tables";
     }
 
-    @RequestMapping("/api/analysis/dags-log/status-code")
+    @GetMapping("/status-code")
     public String calcStatusCode(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         StatusCodeStatistic stat = apiAnalysisService.calcStatusCode(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
@@ -49,7 +44,7 @@ public class ApiStatisticController {
         return "tables";
     }
 
-    @GetMapping("/api/analysis/dags-log/dags-host")
+    @GetMapping("/dags-host")
     public String calcDagsHost(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
@@ -57,7 +52,7 @@ public class ApiStatisticController {
         return "tables";
     }
 
-    @GetMapping("/api/analysis/dags-log/api-type")
+    @GetMapping("/api-type")
     public String calcType(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         TypeStatistic stat = apiAnalysisService.calcType(apiParserService.readApiList(session.getAttribute("fileDate").toString()));

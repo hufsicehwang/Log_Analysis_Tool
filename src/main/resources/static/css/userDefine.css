@@ -52,9 +52,12 @@
 }
 .btn-section{
     margin-top: 40px;
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
     right: 10rem;
+}
+.selected-date, .main-text{
+    color: #4e73df !important
 }

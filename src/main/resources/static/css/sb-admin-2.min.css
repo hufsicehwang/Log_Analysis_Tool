@@ -47,7 +47,7 @@ html {
     font-family: sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent
+    -webkit-tap-highlight-color: transparent;
 }
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
@@ -9947,6 +9947,9 @@ a:focus {
     width: 100%;
     overflow-x: hidden
 }
+#content-wrapper {
+    overflow-y:hidden;
+}
 
 #wrapper #content-wrapper #content {
     flex: 1 0 auto
@@ -10460,7 +10463,8 @@ a:focus {
 
 .sidebar {
     width: 6.5rem;
-    min-height: 100vh
+    min-height: 100vh;
+    height: 100%
 }
 
 .sidebar .nav-item {

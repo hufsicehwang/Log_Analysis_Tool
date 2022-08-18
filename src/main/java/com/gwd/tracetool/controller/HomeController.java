@@ -13,16 +13,17 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/home")
 public class HomeController {
 
-    @GetMapping("/home/select-date")
+    @GetMapping("/select-date")
     public String home(HttpServletRequest request) {
         HttpSession session = request.getSession();
         System.out.println(session.getAttribute("fileDate"));
         return "blank";
     }
 
-    @PostMapping("/home/select-date")
+    @PostMapping("/select-date")
     public String homeToStatistic(HttpServletRequest request) {
         System.out.println(request.getParameter("date"));
         // 해당 file date가 존재 한다면

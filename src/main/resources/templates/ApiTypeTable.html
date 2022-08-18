@@ -41,7 +41,7 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <div class="topBar-text1">Select file date</div> <div class="topBar-text2">Selected file date : <span th:text="${session.fileDate}"></span></div>
+                    <div class="topBar-text1">Statistical Analysis</div> <div class="topBar-text2">Selected file date : <span class="selected-date" th:text="${session.fileDate}"></span></div>
                 </nav>
                 <!-- End of Topbar -->
 
@@ -49,29 +49,28 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">API Type</span> 통계분석</h1>
+                    <p class="mb-4">두개의 Dags Host Server에 분산되어 있는 API log file을 병합해 API Type에 따라 분석 및 통계 합니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>APIName</th>
+                                            <th>API Type</th>
                                             <th>Count</th>
-                                            <th>AvgTime</th>
+                                            <th>Average Time(ms)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="API:${data.getTypes()}">
                                             <td th:text =${API.getType()} class="APIName"></td>
+<!--                                            <td th:text =${API.getHost()}></td>-->
                                             <td th:text =${API.getCount()}></td>
                                             <td th:text =${API.getAvgTime()}></td>
                                         </tr>
