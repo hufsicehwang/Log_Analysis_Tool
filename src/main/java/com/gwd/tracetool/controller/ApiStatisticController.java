@@ -61,7 +61,7 @@ public class ApiStatisticController {
         System.out.println("statistic success");
         System.out.println(stat.getTypes().get(0).getType());
         System.out.println(stat.getTypes().get(0).getCount());
-        System.out.println(stat.getTypes().get(0).getAvgTime());
-        return "ApiTypeTable";
+        System.out.println(stat.getTypes().get(0).getAvgMs());
+        return "blank";
     }
 }

@@ -15,13 +15,11 @@ public class WorkflowStatistic {
     public void increaseStat(TransactionNode model) {
         for (WorkflowNode node : workflows) {
             if (node.getWorkflowType().equals(model.getWorkflowType())) {
-                node.increaseCount();
                 node.addTransaction(model);
                 return;
             }
         }
         WorkflowNode node = new WorkflowNode(model.getWorkflowType());
-        node.increaseCount();
         node.addTransaction(model);
         workflows.add(node);
     }

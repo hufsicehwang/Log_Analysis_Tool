@@ -21,16 +21,5 @@ public class ErrorStatistic {
         ErrorEventNode node = new ErrorEventNode(models.getErrorName(), models.getFailEventName());
         errorNameNodes.add(node);
     }
-//    public void increaseFailEventStat(String failEventName){
-//        for (ErrorEventNode failEvenNode : failErrorEventNodes){
-//            if(failEvenNode.getEventName().equals(failEventName)){
-//                failEvenNode.increaseCount();
-//                return;
-//            }
-//        }
-//        ErrorEventNode failNode = new ErrorEventNode(failEventName);
-//        failNode.increaseCount();
-//        failErrorEventNodes.add(failNode);
-//    }
 
 }

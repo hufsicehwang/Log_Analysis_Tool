@@ -7,6 +7,7 @@ import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
 import com.gwd.tracetool.domain.statistic.event.node.WorkflowNode;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -26,11 +27,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         DemsHostStatistic stat = new DemsHostStatistic();
 
         for (EventModel model : eventModels) {
-            if (model.getDemsHost() == 1) {
-                stat.increaseDems1EventCount();
-            } else {
-                stat.increaseDems2EventCount();
-            }
+            stat.increaseStat(model.getDemsHost());
         }
         return stat;
     }
@@ -42,20 +39,23 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         for (EventModel model : eventModels) {
             stat.increaseStat(model.getEventName());
         }
+
+        Collections.sort(stat.getEventNames());
         return stat;
     }
 
     @Override
     public WorkflowStatistic calcWorkflow(List<EventModel> eventModels) {
         WorkflowStatistic stat = new WorkflowStatistic();
-        List<TransactionNode> transactions = calcTransaction(eventModels).getTransactions();
+        List<TransactionNode> transactions = createTransactions(eventModels).getTransactions();
 
         for (TransactionNode model : transactions) {
             stat.increaseStat(model);
         }
 
         for (WorkflowNode node : stat.getWorkflows()) {
-            node.setAvgMs(node.getTotalMs() / node.getCount());
+            node.setCount(node.getTransactionIds().size());
+            node.setAvgMs(node.getAvgMs() / node.getCount());
         }
         return stat;
     }
@@ -63,7 +63,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     @Override
     public ConsumeTimeStatistic calcConsumeTime(List<EventModel> eventModels) {
         ConsumeTimeStatistic stat = new ConsumeTimeStatistic();
-        List<TransactionNode> transactions = calcTransaction(eventModels).getTransactions();
+        List<TransactionNode> transactions = createTransactions(eventModels).getTransactions();
 
         for (TransactionNode node : transactions) {
             stat.increaseConsumeTimeCount((int) node.getConsumeMs());
@@ -71,7 +71,19 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         return stat;
     }
 
-    private TransactionStatistic calcTransaction(List<EventModel> eventModels) {
+    @Override
+    public TransactionNode searchTransaction(List<EventModel> eventModels, String id) {
+        List<TransactionNode> transactions = createTransactions(eventModels).getTransactions();
+
+        for (TransactionNode node : transactions) {
+            if (node.getTransactionId().equals(id)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private TransactionStatistic createTransactions(List<EventModel> eventModels) {
         TransactionStatistic stat = new TransactionStatistic();
 
         for (EventModel model : eventModels) {
@@ -100,7 +112,6 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
 
         for (ErrorEventModel model : errorEventModels) {
             stat.increaseStat(model);
-            //stat.increaseFailEventStat(model.getFailEventName());
         }
         return stat;
     }

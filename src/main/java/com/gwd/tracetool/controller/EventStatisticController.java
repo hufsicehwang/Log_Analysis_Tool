@@ -27,10 +27,6 @@ public class EventStatisticController {
         return eventParserService.readEventList(date);
     }
 
-//    @GetMapping("/api/analysis/dems-log/event-name")
-//    public EventNameStatistic calcEventName(@RequestParam String date) {
-//        return eventAnalysisService.calcEventName(eventParserService.readEventList(date));
-//    }
     @GetMapping("/api/analysis/dems-log/event-name")
     public String calcEventName(@RequestParam String date, Model model) {
         EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(date));

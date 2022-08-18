@@ -11,11 +11,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static com.gwd.tracetool.utils.Constants.*;
 
 @Slf4j
 @Component
@@ -24,7 +25,7 @@ public class ApiParserServiceImpl implements ApiParserService {
 
     private final ToolProperties toolProperties;
 
-    public List readApiList(String date) {
+    public List<ApiModel> readApiList(String date) {
         int dagsHost = 1;
         List<ApiModel> list = new ArrayList<ApiModel>();
         String fileName = generateLogfileName(date);
@@ -41,21 +42,19 @@ public class ApiParserServiceImpl implements ApiParserService {
         return list;
     }
 
-    private List readApiLogFile(Path path, int dagsHost) {
+    private List<ApiModel> readApiLogFile(Path path, int dagsHost) {
         List<ApiModel> subList = new ArrayList<ApiModel>();
         File file = new File(path.toString());
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            String queueRecord = "[Feign Response] ";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
             while ((line = br.readLine()) != null) {
-                if (!line.contains(queueRecord)) {
+                if (!line.contains(apiQueueRecord)) {
                     continue;
                 }
 
-                int i = line.indexOf(queueRecord) + queueRecord.length();
+                int i = line.indexOf(apiQueueRecord) + apiQueueRecord.length();
                 if (i != -1) {
 
                     LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
@@ -99,11 +98,10 @@ public class ApiParserServiceImpl implements ApiParserService {
     private String generateLogfileName(String date) {
         System.out.println("in parser date : "+date);
         // example : dags_feign.2022-07-14.log
-        SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormatParser.setLenient(false);
+        simpleFormatter.setLenient(false);
         try {
             // 대상 인자 검증
-            dateFormatParser.parse(date);
+            simpleFormatter.parse(date);
         } catch (java.text.ParseException e) {
             log.info("Fail to parse log : log-path={}, stack-trace={}", date, new Throwable().getStackTrace());
         }
