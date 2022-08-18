@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.model.IModel;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -22,16 +24,18 @@ public class EventStatisticController {
     private final EventParserService eventParserService;
     private final EventAnalysisService eventAnalysisService;
 
+
     @GetMapping("/api/parse/dems-log")
     public List<EventModel> parseDemsLog(@RequestParam String date) {
         return eventParserService.readEventList(date);
     }
 
     @GetMapping("/api/analysis/dems-log/event-name")
-    public String calcEventName(@RequestParam String date, Model model) {
-        EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(date));
+    public String calcEventName(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "tables";
+        return "/event/EventNameTable";
     }
 
     @GetMapping("/api/analysis/dems-log/workflow")

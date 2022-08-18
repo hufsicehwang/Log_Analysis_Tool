@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class ApiStatisticController {
         HttpSession session = request.getSession();
         DestinationHostStatistic stat = apiAnalysisService.calcDestinationHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "tables";
+        return "/api/destinationHost_table";
     }
 
     @GetMapping("/status-code")
@@ -57,11 +56,6 @@ public class ApiStatisticController {
         HttpSession session = request.getSession();
         TypeStatistic stat = apiAnalysisService.calcType(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-
-        System.out.println("statistic success");
-        System.out.println(stat.getTypes().get(0).getType());
-        System.out.println(stat.getTypes().get(0).getCount());
-        System.out.println(stat.getTypes().get(0).getAvgMs());
-        return "blank";
+        return "/api/apiType_table";
     }
 }
