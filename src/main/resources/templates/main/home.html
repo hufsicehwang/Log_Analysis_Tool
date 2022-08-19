@@ -39,7 +39,11 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <div class="topBar-text1">Select your file date</div> <div class="topBar-text2">Selected file date : <span class="selected-date" th:text="${session.fileDate}"></span></div>
+                <div class="topBar-text1">Select your file date</div>
+                <div class="topBar-text2">Selected file date :
+                    <span class="selected-date" th:if ="${session.fileDate != null}" th:text="${session.fileDate}"></span>
+                    <span class="selected-date" th:if ="${session.fileDate == null}">none</span>
+                </div>
             </nav>
             <!-- End of Topbar -->
 

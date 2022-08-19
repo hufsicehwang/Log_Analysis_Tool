@@ -46,8 +46,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">API Type</span> 통계분석</h1>
-                    <p class="mb-4">두개의 Dags Host Server에 분산되어 있는 API log file을 병합해 API의 유형에 따라 분석 및 통계 합니다.</p>
+                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Dags Host Server</span> 통계분석</h1>
+                    <p class="mb-4">두개의 Dags Host Server에 분산되어 있는 API log file을 저장 되었던 server에 따라 분석 및 통계 합니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -59,26 +59,20 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>API Type</th>
-                                            <th>Host</th>
-                                            <th>Average Time(ms)</th>
+                                            <th>Dags Host</th>
                                             <th>Count</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th></th>
-                                            <th></th>
-                                            <th></th>
                                             <th>Total : <span  class="count-total"></span ></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="API:${data.getTypes()}">
-                                            <td th:text =${API.getType()}></td>
-                                            <td th:text =${API.getHost()}></td>
-                                            <td th:text =${API.getAvgMs()}></td>
-                                            <td th:text =${API.getCount()} class="count"></td>
+                                        <tr th:each="API:${data.getDagsHosts()}">
+                                            <td th:text =${API.key} class="dags-host-server-name"></td>
+                                            <td th:text =${API.value} class="count"></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -147,7 +147,7 @@ function calendarInit() {
             },
             success:function(){
                 console.log("success");
-                window.location.href = '/api/analysis/dems-log/event-name';
+                window.location.href = '/api/analysis/dags-log/api-type';
             },
             error:function(){
                 console.log("file does not exist");

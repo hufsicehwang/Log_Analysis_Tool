@@ -24,7 +24,7 @@ public class ApiStatisticController {
         HttpSession session = request.getSession();
         TimeStatistic stat = apiAnalysisService.calcTime(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "tables";
+        return "/api/consumeTime_table";
     }
 
     @GetMapping("/destination-host")
@@ -40,7 +40,7 @@ public class ApiStatisticController {
         HttpSession session = request.getSession();
         StatusCodeStatistic stat = apiAnalysisService.calcStatusCode(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "tables";
+        return "/api/statusCode_table";
     }
 
     @GetMapping("/dags-host")
@@ -48,7 +48,7 @@ public class ApiStatisticController {
         HttpSession session = request.getSession();
         DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "tables";
+        return "api/dagsHostServer_table";
     }
 
     @GetMapping("/api-type")
