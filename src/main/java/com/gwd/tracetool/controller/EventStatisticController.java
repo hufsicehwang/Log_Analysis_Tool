@@ -9,6 +9,7 @@ import com.gwd.tracetool.service.EventAnalysisService;
 import com.gwd.tracetool.service.EventParserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.model.IModel;
@@ -19,51 +20,58 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/api/analysis/dems-log")
 public class EventStatisticController {
 
     private final EventParserService eventParserService;
     private final EventAnalysisService eventAnalysisService;
 
 
-    @GetMapping("/api/parse/dems-log")
-    public List<EventModel> parseDemsLog(@RequestParam String date) {
-        return eventParserService.readEventList(date);
-    }
+//    @GetMapping("/api/parse/dems-log")
+//    public List<EventModel> parseDemsLog(@RequestParam String date) {
+//        return eventParserService.readEventList(date);
+//    }
 
-    @GetMapping("/api/analysis/dems-log/event-name")
+    @GetMapping("/event-name")
     public String calcEventName(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "/event/EventNameTable";
+        return "/event/eventName_table";
     }
 
-    @GetMapping("/api/analysis/dems-log/workflow")
+    @GetMapping("/workflow")
     public WorkflowStatistic calcWorkflow(@RequestParam String date) {
         return eventAnalysisService.calcWorkflow(eventParserService.readEventList(date));
     }
 
-    @GetMapping("/api/analysis/dems-log/dems-host")
+    @GetMapping("/dems-host")
     public DemsHostStatistic calcDemsHost(@RequestParam String date) {
         return eventAnalysisService.calcDemsHost(eventParserService.readEventList(date));
     }
 
-    @GetMapping("/api/analysis/dems-log/create-at")
-    public TimeStatistic calcCreateAt(@RequestParam String date) {
-        return eventAnalysisService.calcTime(eventParserService.readEventList(date));
+    @GetMapping("/create-at")
+    public String calcCreateAt(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        TimeStatistic stat = eventAnalysisService.calcTime(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "event/createdTime_table";
     }
 
-    @GetMapping("/api/analysis/dems-log/consume-time")
+    @GetMapping("/consume-time")
     public ConsumeTimeStatistic calcConsumeTime(@RequestParam String date) {
         return eventAnalysisService.calcConsumeTime(eventParserService.readEventList(date));
     }
 
-    @GetMapping("/api/analysis/dems-log/provider")
-    public ProviderStatistic calcProvider(@RequestParam String date) {
-        return eventAnalysisService.calcProvider(eventParserService.readEventList(date));
+    @GetMapping("/provider")
+    public String calcProvider(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        ProviderStatistic stat = eventAnalysisService.calcProvider(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "event/provider_table";
     }
 
-    @GetMapping("/api/analysis/dems-log/error")
+    @GetMapping("/error")
     public List<ErrorEventModel> listUpError(@RequestParam String date) {
         return eventParserService.readErrorEventList(date);
     }
