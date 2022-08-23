@@ -138,19 +138,22 @@ function calendarInit() {
 
 
     function sendDate(){
-        console.log("post 요청!");
         $.ajax({
             type:'post',
             url:'/home/select-date',
             data:{
                 date : fileDate
             },
-            success:function(){
-                console.log("success");
-                window.location.href = '/api/analysis/dags-log/api-type';
+            success:function(data){
+                if(data=="OK"){
+                    window.location.href = '/api/analysis/dags-log/api-type';
+                }
+                else{
+                   alert("해당 날짜의 file이 존재 하지 않습니다. \n :: Selected Date : "+fileDate);
+                }
             },
             error:function(){
-                console.log("file does not exist");
+                console.log("error");
             }
         })
         }
