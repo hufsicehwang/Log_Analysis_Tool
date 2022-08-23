@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Log Analysis Tool</title>
-    <!-- Custom styles for this template -->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="/css/userDefine.css" rel="stylesheet">
-
+    <link href="/css/modal.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -43,8 +44,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Event Name</span> 통계분석</h1>
-                    <p class="mb-4">두개의 Dems Host Server에 분산되어 있는 Event log file을 병합해 발생한 Event Name에 따라 분석 및 통계 합니다.</p>
+                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Workflow</span> 통계분석</h1>
+                    <p class="mb-4">두개의 Dems Host Server에 분산되어 있는 Event log file을 병합해 Workflow에 따라 분석 및 통계 합니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -55,22 +56,46 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr>
-                                            <th>EventName</th>
-                                            <th>Count</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Workflow Type</th>
+                                        <th>Average Ms</th>
+                                        <th>Additional Info</th>
+                                        <th>Count</th>
+                                    </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th>Total : <span  class="count-total"></span ></th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="EVENT:${data.getEventNames()}">
-                                            <td class="label"th:text =${EVENT.getEventName()}></td>
-                                            <td class="count" th:text =${EVENT.getCount()}></td>
-                                        </tr>
+                                    <tr th:each="Workflow:${data.getWorkflows()}">
+
+                                        <td class="label" th:text ="${Workflow.getWorkflowType()}"></td>
+                                        <td th:text ="${Workflow.getAvgMs()}"></td>
+                                        <td><button type="button" class="btn workflow-info">Click!</button></td>
+                                        <td class="count" th:text ="${Workflow.getCount()}"></td>
+
+                                        <!-- Modal -->
+                                        <div class="modal">
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+                                                <h5 class="modal-header-text">Events </h5>
+                                                <div th:each="Event:${Workflow.getTransactions()[0].getEvents()}">
+                                                    <p th:text="${Event}"></p>
+                                                </div><br>
+
+                                                <h5 class="modal-header-text">TransactionIds </h5>
+                                                <div th:each="Transaction:${Workflow.getTransactions()}">
+                                                    <p th:text="${Transaction.getTransactionId()}"></p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -101,7 +126,7 @@
                                     <canvas id="myBarChart"></canvas>
                                 </div>
                                 <hr>
-                                Event별 개수
+                                WorkFlow Type별 Transaction 개수
                             </div>
                         </div>
 
@@ -123,6 +148,10 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -143,6 +172,7 @@
     <script src="/js/demo/datatables-demo.js"></script>
     <script src="/js/user-define.js"></script>
     <script src="/js/demo/chart-bar-demo.js"></script>
+    <script src="/js/modal.js"></script>
 
 </body>
 

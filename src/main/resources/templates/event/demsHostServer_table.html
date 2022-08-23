@@ -71,13 +71,47 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="EVENT:${data.getDemsHosts()}">
-                                            <td th:text =${EVENT.key} class="dags-host-server-name"></td>
+                                            <td th:text =${EVENT.key} class="dags-host-server-name label"></td>
                                             <td th:text =${EVENT.value} class="count"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-7">
+
+                        <!-- Donut Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Pie Chart</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <hr>
+                                    Server별 개수
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -101,7 +135,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -115,10 +148,13 @@
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/chartjs-plugin-datalabels.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
     <script src="/js/user-define.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

@@ -47,7 +47,7 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Created Time</span> 통계분석</h1>
-                    <p class="mb-4">두개의 Dags Host Server에 분산되어 있는 Event log file을 병합해 event의 발생 시간에 따라 분석 및 통계 합니다.
+                    <p class="mb-4">두개의 Dems Host Server에 분산되어 있는 Event log file을 병합해 transaction의 발생 시간에 따라 분석 및 통계 합니다.
                         <br>값의 범위는 (이상,미만) 관계 입니다. ex) 00시 이상 ~ 02시 미만
                     </p>
 
@@ -61,48 +61,78 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>00시 ~ 02시</th>
-                                            <th>02시 ~ 04시</th>
-                                            <th>04시 ~ 06시</th>
-                                            <th>06시 ~ 08시</th>
-                                            <th>08시 ~ 10시</th>
-                                            <th>10시 ~ 12시</th>
+                                            <th class="label">00시 ~ 02시</th>
+                                            <th class="label">02시 ~ 04시</th>
+                                            <th class="label">04시 ~ 06시</th>
+                                            <th class="label">06시 ~ 08시</th>
+                                            <th class="label">08시 ~ 10시</th>
+                                            <th class="label">10시 ~ 12시</th>
                
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="EVENT:${data}">
-                                            <td th:text =${EVENT.getGt00()}></td>
-                                            <td th:text =${EVENT.getGt02()}></td>
-                                            <td th:text =${EVENT.getGt04()}></td>
-                                            <td th:text =${EVENT.getGt06()}></td>
-                                            <td th:text =${EVENT.getGt08()}></td>
-                                            <td th:text =${EVENT.getGt10()}></td>
+                                            <td class="count" th:text =${EVENT.getGt00()}></td>
+                                            <td class="count" th:text =${EVENT.getGt02()}></td>
+                                            <td class="count" th:text =${EVENT.getGt04()}></td>
+                                            <td class="count" th:text =${EVENT.getGt06()}></td>
+                                            <td class="count" th:text =${EVENT.getGt08()}></td>
+                                            <td class="count" th:text =${EVENT.getGt10()}></td>
                                         </tr>
                                     </tbody>
                                     <thead>
                                     <tr>
-                                        <th>12시 ~ 14시</th>
-                                        <th>14시 ~ 16시</th>
-                                        <th>16시 ~ 18시</th>
-                                        <th>18시 ~ 20시</th>
-                                        <th>20시 ~ 22시</th>
-                                        <th>22시 ~ 24시</th>
+                                        <th class="label">12시 ~ 14시</th>
+                                        <th class="label">14시 ~ 16시</th>
+                                        <th class="label">16시 ~ 18시</th>
+                                        <th class="label">18시 ~ 20시</th>
+                                        <th class="label">20시 ~ 22시</th>
+                                        <th class="label">22시 ~ 24시</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="EVENT:${data}">
-                                        <td th:text =${EVENT.getGt12()}></td>
-                                        <td th:text =${EVENT.getGt14()}></td>
-                                        <td th:text =${EVENT.getGt16()}></td>
-                                        <td th:text =${EVENT.getGt18()}></td>
-                                        <td th:text =${EVENT.getGt20()}></td>
-                                        <td th:text =${EVENT.getGt22()}></td>
+                                        <td class="count" th:text =${EVENT.getGt12()}></td>
+                                        <td class="count" th:text =${EVENT.getGt14()}></td>
+                                        <td class="count" th:text =${EVENT.getGt16()}></td>
+                                        <td class="count" th:text =${EVENT.getGt18()}></td>
+                                        <td class="count" th:text =${EVENT.getGt20()}></td>
+                                        <td class="count" th:text =${EVENT.getGt22()}></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-7">
+
+                        <!-- Bar Chart -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-bar">
+                                    <canvas id="myBarChart"></canvas>
+                                </div>
+                                <hr>
+                                해당 발생시간의 transaction 개수
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -140,9 +170,11 @@
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/demo/chart-bar-demo.js"></script>
 
 </body>
 

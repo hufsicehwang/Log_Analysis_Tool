@@ -39,8 +39,16 @@ public class EventStatisticController {
     }
 
     @GetMapping("/workflow")
-    public WorkflowStatistic calcWorkflow(@RequestParam String date) {
-        return eventAnalysisService.calcWorkflow(eventParserService.readEventList(date));
+    public String calcWorkflow(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            WorkflowStatistic stat = eventAnalysisService.calcWorkflow(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
+
+        return "event/workflow_table";
     }
 
     @GetMapping("/dems-host")

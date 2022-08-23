@@ -2,34 +2,61 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
+let labels = document.querySelectorAll('.label');
+let labelArr = new Array();
+for(let i=0; i < labels.length; i++){
+    labelArr.push(labels[i].innerText);
+}
+
+let data = document.querySelectorAll('.count');
+let dataArr = new Array();
+for(let i=0; i < data.length; i++){
+      dataArr.push(data[i].innerText);
+}
+
 // Pie Chart Example
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, {
-  type: 'doughnut',
+let ctx = document.getElementById("myPieChart");
+let myPieChart = new Chart(ctx, {
+  plugins: [ChartDataLabels],
+  type: 'pie',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: labelArr,
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-      hoverBorderColor: "rgba(234, 236, 244, 1)",
+      data: dataArr,
+      backgroundColor: ['#4e73df', '#1cc88a'],
+      hoverBackgroundColor: ['#2e59d9', '#17a673']
     }],
   },
   options: {
+    responsive: true,
     maintainAspectRatio: false,
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-    },
     legend: {
-      display: false
+      position: 'right',
+        labels: {
+          padding: 20,
+          boxWidth: 10
+      }
     },
-    cutoutPercentage: 80,
-  },
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          let sum = 0;
+          let dataArr = ctx.chart.data.datasets[0].data;
+          dataArr.map(data => {
+            sum += Number(data);
+          });
+          let percentage = (value * 100 / sum).toFixed(2) + "%";
+          return percentage;
+        },
+        color: 'white',
+        labels: {
+          title: {
+            font: {
+              size: '16'
+            }
+          }
+        }
+      }
+    }
+  }
 });

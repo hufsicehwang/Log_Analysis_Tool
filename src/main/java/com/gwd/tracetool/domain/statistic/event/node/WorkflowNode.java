@@ -13,14 +13,14 @@ public class WorkflowNode {
     private int count;
     @Setter
     private long avgMs;
-    private final List<TransactionNode> transactionIds = new ArrayList<TransactionNode>();
+    private final List<TransactionNode> transactions = new ArrayList<TransactionNode>();
 
     public WorkflowNode(String workflowType) {
         this.workflowType = workflowType;
     }
 
     public void addTransaction(TransactionNode node) {
-        transactionIds.add(node);
+        transactions.add(node);
         increaseTotalTime(node.getConsumeMs());
     }
 

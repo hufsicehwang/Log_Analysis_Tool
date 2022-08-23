@@ -68,13 +68,43 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="EVENT:${data.getProviderNode()}">
-                                            <td class="data"th:text =${EVENT.getProvider()}></td>
+                                            <td class="label" th:text =${EVENT.getProvider()}></td>
                                             <td class="count" th:text =${EVENT.getCount()}></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-7">
+
+                        <!-- Bar Chart -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-bar">
+                                    <canvas id="myBarChart"></canvas>
+                                </div>
+                                <hr>
+                                제공자 별 개수
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -107,10 +137,13 @@
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
     <script src="/js/user-define.js"></script>
+    <script src="/js/demo/chart-bar-demo.js"></script>
+
 </body>
 
 </html>
