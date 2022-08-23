@@ -1,18 +1,14 @@
 package com.gwd.tracetool.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import com.gwd.tracetool.domain.ErrorEventModel;
-import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
 import com.gwd.tracetool.service.EventAnalysisService;
 import com.gwd.tracetool.service.EventParserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.model.IModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,12 +27,15 @@ public class EventStatisticController {
         HttpSession session = request.getSession();
         EventNameStatistic stat = eventAnalysisService.calcEventName(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "/event/eventName_table";
+        return "event/eventName_table";
     }
 
     @GetMapping("/workflow")
-    public WorkflowStatistic calcWorkflow(@RequestParam String date) {
-        return eventAnalysisService.calcWorkflow(eventParserService.readEventList(date));
+    public String calcWorkflow(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        WorkflowStatistic stat = eventAnalysisService.calcWorkflow(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "event/workflow_table";
     }
 
     @GetMapping("/dems-host")

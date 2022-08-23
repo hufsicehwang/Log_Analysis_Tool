@@ -3,7 +3,7 @@ package com.gwd.tracetool.domain.statistic.event;
 import lombok.Getter;
 
 @Getter
-public class ConsumeTimeStatistic {     //  tansactionId 별 소모 시간에 따른 통계
+public class ConsumeTimeStatistic {     //  tansaction 별 소모 시간에 따른 통계
     private Integer gt100Ms;
     private Integer gt500Ms;
     private Integer gt1000Ms;

@@ -61,3 +61,12 @@
 .selected-date, .main-text{
     color: #4e73df !important
 }
+.workflow-inf{
+    transition: all 1s;
+}
+.workflow-info:hover{
+    color:#4e73df;
+    font-weight:bold;
+    transform: scale(1.2);
+
+}
