@@ -37,34 +37,50 @@ public class ApiStatisticController {
     }
 
     @GetMapping("/destination-host")
-    public String calcDestinationHost(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        DestinationHostStatistic stat = apiAnalysisService.calcDestinationHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
-        model.addAttribute("data", stat);
+    public String calcDestinationHost(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            DestinationHostStatistic stat = apiAnalysisService.calcDestinationHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
         return "/api/destinationHost_table";
     }
 
     @GetMapping("/status-code")
-    public String calcStatusCode(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        StatusCodeStatistic stat = apiAnalysisService.calcStatusCode(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
-        model.addAttribute("data", stat);
+    public String calcStatusCode(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            StatusCodeStatistic stat = apiAnalysisService.calcStatusCode(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
         return "/api/statusCode_table";
     }
 
     @GetMapping("/dags-host")
-    public String calcDagsHost(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
-        model.addAttribute("data", stat);
+    public String calcDagsHost(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
         return "api/dagsHostServer_table";
     }
 
     @GetMapping("/api-type")
-    public String calcType(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        TypeStatistic stat = apiAnalysisService.calcType(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
-        model.addAttribute("data", stat);
+    public String calcType(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            TypeStatistic stat = apiAnalysisService.calcType(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
         return "/api/apiType_table";
     }
 }
