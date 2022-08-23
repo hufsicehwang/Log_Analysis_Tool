@@ -66,7 +66,6 @@ public class EventParserServiceImpl implements EventParserService {
         for (Path logPath : dagsLogDirPathList) {
             list.addAll(readErrorEventLogFile(logPath, demsHost++));
         }
-
         return list;
     }
 
@@ -113,8 +112,8 @@ public class EventParserServiceImpl implements EventParserService {
 
 
             while ((line = br.readLine()) != null) {
-                if (line.contains(eventQueueRecord)) {
-                    int i = line.indexOf(eventToken) + eventToken.length();
+                if (line.contains(errorEventQueueRecord)) {
+                    int i = line.indexOf(errorEventToken) + errorEventToken.length();
 
                     if (i != -1) {
                         LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
@@ -122,7 +121,6 @@ public class EventParserServiceImpl implements EventParserService {
 
                         headerJSON = stringToJSON(subStr);
                         ErrorEventModel errorEventModel = createErrorEventModel(headerJSON);
-                        errorEventModel.setOccurrenceTime(occurrenceTime);
                         errorEventModel.setDemsHost(demsHost);
                         list.add(errorEventModel);
                     }

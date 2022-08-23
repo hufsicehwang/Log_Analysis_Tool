@@ -4,6 +4,7 @@ import com.gwd.tracetool.domain.FileDateDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.junit.runner.Request;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +21,15 @@ public class HomeController {
     public String home(HttpServletRequest request) {
         HttpSession session = request.getSession();
         System.out.println(session.getAttribute("fileDate"));
-        return "blank";
+        return "/main/home";
     }
 
     @PostMapping("/select-date")
     public String homeToStatistic(HttpServletRequest request) {
-        System.out.println(request.getParameter("date"));
+        System.out.println("request parameter : "+request.getParameter("date"));
         // 해당 file date가 존재 한다면
         HttpSession session = request.getSession();
         session.setAttribute("fileDate",request.getParameter("date"));
-        return "blank";
+        return "/main/home";
     }
 }

@@ -139,16 +139,6 @@ function calendarInit() {
 
     function sendDate(){
         console.log("post 요청!");
-//            let form = document.createElement('form');
-//            form.setAttribute('method','post');
-//            form.setAttribute('action','/home/select-date');
-//            let dataInput = document.createElement('input');
-//            dataInput.setAttribute('type','text');
-//            dataInput.setAttribute('name','fileDate');
-//            dataInput.setAttribute('id','fileDate');
-//            dataInput.setAttribute('value',fileDate);
-//            document.body.appendChild(form);
-//            form.submit();
         $.ajax({
             type:'post',
             url:'/home/select-date',
@@ -163,9 +153,5 @@ function calendarInit() {
                 console.log("file does not exist");
             }
         })
-
-
         }
-
-
 }

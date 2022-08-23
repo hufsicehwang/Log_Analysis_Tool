@@ -11,9 +11,6 @@
 
     <!-- Custom fonts for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
@@ -30,7 +27,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <div class="side-bar-section" th:insert="/sideBar.html"></div>
+        <div class="side-bar-section" th:insert="/main/sideBar.html"></div>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -41,7 +38,7 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <div class="topBar-text1">Select file date</div> <div class="topBar-text2">Selected file date : <span th:text="${session.fileDate}"></span></div>
+                    <div class="topBar-text1">Statistical Analysis</div> <div class="topBar-text2">Selected file date : <span class="selected-date" th:text="${session.fileDate}"></span></div>
                 </nav>
                 <!-- End of Topbar -->
 
@@ -49,84 +46,90 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                                                                                   href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Dags Host Server</span> 통계분석</h1>
+                    <p class="mb-4">두개의 Dags Host Server에 분산되어 있는 API log file에 대해서 저장 되었던 server에 따라 분석 및 통계 합니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                    <tr>
-                                        <th>DagsHost</th>
-                                        <th>Count</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Dags Host</th>
+                                            <th>Count</th>
+                                        </tr>
                                     </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Total : <span  class="count-total"></span ></th>
+                                        </tr>
+                                    </tfoot>
                                     <tbody>
-                                    <tr th:each="Host:${data.getDagsHosts()}">
-                                        <td class="label"th:text =${Host.getKey()}></td>
-                                        <td class="count" th:text =${Host.getValue()}></td>
-                                    </tr>
+                                        <tr th:each="API:${data.getDagsHosts()}">
+                                            <td th:text =${API.key} class="dags-host-server-name label"></td>
+                                            <td th:text =${API.value} class="count"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
+
             </div>
             <!-- End of Main Content -->
 
             <!-- Begin Page Content -->
-                        <div class="container-fluid">
+            <div class="container-fluid">
 
-                            <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Charts</h1>
-                            <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
-                                The charts below have been customized - for further customization options, please visit the <a
-                                        target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
-                                    documentation</a>.</p>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Charts</h1>
+                <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
+                    The charts below have been customized - for further customization options, please visit the <a
+                            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
+                        documentation</a>.</p>
 
-                            <!-- Content Row -->
-                            <div class="row">
+                <!-- Content Row -->
+                <div class="row">
 
-                                <div class="col-xl-8 col-lg-7">
+                    <div class="col-xl-8 col-lg-7">
 
-                                    <!-- Donut Chart -->
-                                    <div class="col-xl-4 col-lg-5">
-                                        <div class="card shadow mb-4">
-                                            <!-- Card Header - Dropdown -->
-                                            <div class="card-header py-3">
-                                                <h6 class="m-0 font-weight-bold text-primary">Pie Chart</h6>
-                                            </div>
-                                            <!-- Card Body -->
-                                            <div class="card-body">
-                                                <div class="chart-pie pt-4">
-                                                    <canvas id="myPieChart"></canvas>
-                                                </div>
-                                                <hr>
-                                                Styling for the donut chart can be found in the
-                                                <code>/js/demo/chart-pie-demo.js</code> file.
-                                            </div>
-                                        </div>
-                                    </div>
-
+                        <!-- Donut Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Pie Chart</h6>
                                 </div>
-
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <hr>
+                                    Styling for the donut chart can be found in the
+                                    <code>/js/demo/chart-pie-demo.js</code> file.
+                                </div>
                             </div>
-                            <!-- /.container-fluid -->
-
                         </div>
-                        <!-- End of Main Content -->
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
 
             <!-- Footer -->
-            <div class="footer-section" th:replace="/footer.html"></div>
+            <div class="footer-section" th:replace="/main/footer.html"></div>
             <!-- End of Footer -->
 
         </div>
@@ -159,7 +162,9 @@
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/user-define.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
+
 </body>
 
 </html>
