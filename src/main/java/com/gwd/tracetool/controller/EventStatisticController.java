@@ -46,8 +46,11 @@ public class EventStatisticController {
     }
 
     @GetMapping("/dems-host")
-    public DemsHostStatistic calcDemsHost(@RequestParam String date) {
-        return eventAnalysisService.calcDemsHost(eventParserService.readEventList(date));
+    public String calcDemsHost(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        DemsHostStatistic stat = eventAnalysisService.calcDemsHost(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "event/demsHostServer_table";
     }
 
     @GetMapping("/create-at")
@@ -59,8 +62,11 @@ public class EventStatisticController {
     }
 
     @GetMapping("/consume-time")
-    public ConsumeTimeStatistic calcConsumeTime(@RequestParam String date) {
-        return eventAnalysisService.calcConsumeTime(eventParserService.readEventList(date));
+    public String calcConsumeTime(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        ConsumeTimeStatistic stat = eventAnalysisService.calcConsumeTime(eventParserService.readEventList(session.getAttribute("fileDate").toString()));
+        model.addAttribute("data",stat);
+        return "event/consumeTime_table";
     }
 
     @GetMapping("/provider")
@@ -72,8 +78,11 @@ public class EventStatisticController {
     }
 
     @GetMapping("/error")
-    public List<ErrorEventModel> listUpError(@RequestParam String date) {
-        return eventParserService.readErrorEventList(date);
+    public String listUpError(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        List<ErrorEventModel> list =  eventParserService.readErrorEventList(session.getAttribute("fileDate").toString());
+        model.addAttribute("data",list);
+        return "event/errorEvent_table";
     }
 
 

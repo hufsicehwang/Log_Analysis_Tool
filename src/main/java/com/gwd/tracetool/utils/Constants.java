@@ -10,6 +10,8 @@ public final class Constants {
 
     public static final String apiQueueRecord = "[Feign Response] ";
     public static final String eventQueueRecord = "receive message propertioes: MessageProperties";
+    public static final String errorEventQueueRecord = "receive error message propertioes: MessageProperties";
     public static final String eventToken = "receivemessage: ";
+    public static final String errorEventToken = "receivemessage: ";
 
 }

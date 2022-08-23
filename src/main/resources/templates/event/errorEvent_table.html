@@ -4,16 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Log Analysis Tool</title>
+    <!-- Custom styles for this template -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -46,10 +43,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Consumed Time</span> 통계분석</h1>
-                    <p class="mb-4">>두개의 Dags Host Server에 분산되어 있는 Event log file을 병합해 event별 소비한 시간에 따라 분석 및 통계 합니다.
-                        <br>값의 범위는 (이상,미만) 관계 입니다. ex) 100ms 이상 ~ 500ms 미만
-                    </p>
+                    <h1 class="h3 mb-2 text-gray-800"><span class="main-text">Error Event</span> 통계분석</h1>
+                    <p class="mb-4">두개의 Dems Host Server에 분산되어 있는 Error Event log file을 병합해 발생한 Error Event를 분석 및 통계합니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -61,43 +56,23 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>100ms 미만</th>
-                                            <th>100ms ~ 500ms </th>
-                                            <th>500ms ~ 1s </th>
-                                            <th>1s ~ 5s </th>
-                                            <th>5s ~ 10s </th>
-                                            <th>10s ~ 30s </th>
+                                            <th>Error Name</th>
+                                            <th>Fail Event Name</th>
+                                            <th>Fail Workflow Type</th>
+                                            <th>Fail Transaction Id</th>
+                                            <th>Dems Host</th>
+                                            <th>Created At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="EVENT:${data}">
-                                            <td th:text =${EVENT.getGt100Ms()}></td>
-                                            <td th:text =${EVENT.getGt500Ms()}></td>
-                                            <td th:text =${EVENT.getGt1000Ms()}></td>
-                                            <td th:text =${EVENT.getGt5s()}></td>
-                                            <td th:text =${EVENT.getGt10s()}></td>
-                                            <td th:text =${EVENT.getGt30s()}></td>
+                                            <td class="label"th:text =${EVENT.getErrorName()}></td>
+                                            <td class="label"th:text =${EVENT.getFailEventName()}></td>
+                                            <td class="label"th:text =${EVENT.getFailWorkFlowType()}></td>
+                                            <td class="label"th:text =${EVENT.getFailTransactionId()}></td>
+                                            <td class="label"th:text =${EVENT.getDemsHost()}></td>
+                                            <td class="label"th:text =${EVENT.getCreateAt()}></td>
                                         </tr>
-                                    </tbody>
-                                    <thead>
-                                    <tr>
-                                        <th>30s ~ 60s </th>
-                                        <th>60s ~ 120s </th>
-                                        <th>120s ~ 300s </th>
-                                        <th>300s ~ 600s </th>
-                                        <th>600s ~ 1200s </th>
-                                        <th>1200s 이상</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="EVENT:${data}">
-                                        <td th:text =${EVENT.getGt60s()}></td>
-                                        <td th:text =${EVENT.getGt120s()}></td>
-                                        <td th:text =${EVENT.getGt300s()}></td>
-                                        <td th:text =${EVENT.getGt600s()}></td>
-                                        <td th:text =${EVENT.getGt1200s()}></td>
-                                        <td th:text =${EVENT.getLe1200s()}></td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -120,11 +95,6 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -142,7 +112,7 @@
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
-
+    <script src="/js/user-define.js"></script>
 </body>
 
 </html>
