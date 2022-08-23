@@ -1,17 +1,16 @@
 package com.gwd.tracetool.controller;
 
-import com.gwd.tracetool.domain.ApiModel;
 import com.gwd.tracetool.domain.statistic.api.*;
 import com.gwd.tracetool.service.ApiAnalysisService;
 import com.gwd.tracetool.service.ApiParserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,7 +48,7 @@ public class ApiStatisticController {
         HttpSession session = request.getSession();
         DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
         model.addAttribute("data",stat);
-        return "tables";
+        return "dags-host";
     }
 
     @GetMapping("/api-type")
@@ -62,6 +61,6 @@ public class ApiStatisticController {
         System.out.println(stat.getTypes().get(0).getType());
         System.out.println(stat.getTypes().get(0).getCount());
         System.out.println(stat.getTypes().get(0).getAvgMs());
-        return "blank";
+        return "ApiTypeTable";
     }
 }

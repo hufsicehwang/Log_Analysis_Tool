@@ -2,15 +2,15 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-var labels = document.querySelectorAll('.label');
-var labelArr = new Array();
-for(var i=0; i < labels.length; i++){
+let labels = document.querySelectorAll('.label');
+let labelArr = new Array();
+for(let i=0; i < labels.length; i++){
     labelArr.push(labels[i].innerText);
 }
 
-var data = document.querySelectorAll('.data');
-var dataArr = new Array();
-for(var i=0; i < data.length; i++){
+let data = document.querySelectorAll('.count');
+let dataArr = new Array();
+for(let i=0; i < data.length; i++){
       dataArr.push(data[i].innerText);
 }
 
@@ -18,13 +18,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
   // *     return: '1 234,56'
   number = (number + '').replace(',', '').replace(' ', '');
-  var n = !isFinite(+number) ? 0 : +number,
+  let n = !isFinite(+number) ? 0 : +number,
     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
     dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
     s = '',
     toFixedFix = function(n, prec) {
-      var k = Math.pow(10, prec);
+      let k = Math.pow(10, prec);
       return '' + Math.round(n * k) / k;
     };
   // Fix for IE parseFloat(0.55).toFixed(0) = 0;
@@ -40,26 +40,22 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myBarChart = new Chart(ctx, {
-  type: 'bar',
+let ctx = document.getElementById("myBarChart");
+let myBarChart = new Chart(ctx, {
+  //plugins: [ChartDataLabels],
+  type: "bar",
   data: {
     labels: labelArr,
     datasets: [{
       label: "Count",
+      data: dataArr,
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: dataArr,
+      borderColor: "#4e73df"
     }],
   },
   options: {
     maintainAspectRatio: false,
-    plugins: {
-      datalabels: {
-        display: false
-      }
-    },
     layout: {
       padding: {
         left: 10,
@@ -119,7 +115,7 @@ var myBarChart = new Chart(ctx, {
       caretPadding: 10,
       callbacks: {
         label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+          let datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
           return datasetLabel + ':' + number_format(tooltipItem.yLabel);
         }
       }

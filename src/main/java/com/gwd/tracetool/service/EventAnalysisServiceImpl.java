@@ -54,7 +54,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         }
 
         for (WorkflowNode node : stat.getWorkflows()) {
-            node.setCount(node.getTransactionIds().size());
+            node.setCount(node.getTransactions().size());
             node.setAvgMs(node.getAvgMs() / node.getCount());
         }
         return stat;
