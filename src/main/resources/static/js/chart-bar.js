@@ -1,4 +1,3 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
@@ -8,20 +7,18 @@ for(let i=0; i < labels.length; i++){
     labelArr.push(labels[i].innerText);
 }
 
-let data = document.querySelectorAll('.count');
-let dataArr = new Array();
-for(let i=0; i < data.length; i++){
-      dataArr.push(data[i].innerText);
+let count = document.querySelectorAll('.count');
+let countArr = new Array();
+for(let i=0; i < count.length; i++){
+      countArr.push(count[i].innerText);
 }
-var max =0;
-var count = document.querySelectorAll('.count');
-for(var i =0; i<count.length;i++){
+
+max =0;
+for(let i =0; i<count.length;i++){
     if(parseInt(count[i].innerText) > max){
         max = parseInt(count[i].innerText);
     }
 }
-
-console.log(max);
 
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
@@ -57,7 +54,7 @@ let myBarChart = new Chart(ctx, {
     labels: labelArr,
     datasets: [{
       label: "Count",
-      data: dataArr,
+      data: countArr,
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df"

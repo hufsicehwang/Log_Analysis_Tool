@@ -70,3 +70,6 @@
     transform: scale(1.2);
 
 }
+.chart-subText{
+    font-weight:bold;
+}
