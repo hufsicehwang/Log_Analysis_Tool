@@ -67,7 +67,7 @@ public class ApiParserServiceImpl implements ApiParserService {
                 }
             }
         } catch (FileNotFoundException e){
-            System.out.println("file does not exist!");
+            log.info("File Dose Not Exist : log-path={}, stack-trace={}", path, new Throwable().getStackTrace());
         }catch (IOException e) {
             log.info("Fail to parse log : log-path={}, stack-trace={}", path, new Throwable().getStackTrace());
         }
@@ -96,7 +96,6 @@ public class ApiParserServiceImpl implements ApiParserService {
     }
 
     private String generateLogfileName(String date) {
-        System.out.println("in parser date : "+date);
         // example : dags_feign.2022-07-14.log
         simpleFormatter.setLenient(false);
         try {

@@ -5,6 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 public final class Constants {
 
+    private Constants() {
+        throw new AssertionError();
+    }
+
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     public static final SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd");
 

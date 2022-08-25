@@ -25,7 +25,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <div class="side-bar-section" th:insert="/main/sideBar.html"></div>
+        <div class="side-bar-section" th:insert="/main/event_sidebar.html"></div>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -36,7 +36,7 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <div class="topBar-text1">Select file date</div> <div class="topBar-text2">Selected file date : <span th:text="${session.fileDate}"></span></div>
+                    <div class="topBar-text1">Statistical Analysis</div> <div class="topBar-text2">Selected file date : <span class="selected-date" th:text="${session.fileDate}"></span></div>
                 </nav>
                 <!-- End of Topbar -->
 
@@ -50,7 +50,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -58,18 +58,26 @@
                                     <thead>
                                     <tr>
                                         <th>Workflow Type</th>
-                                        <th>Count</th>
                                         <th>Average Ms</th>
                                         <th>Additional Info</th>
+                                        <th>Count</th>
                                     </tr>
                                     </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Total : <span  class="count-total"></span ></th>
+                                    </tr>
+                                    </tfoot>
                                     <tbody>
                                     <tr th:each="Workflow:${data.getWorkflows()}">
 
                                         <td class="label" th:text ="${Workflow.getWorkflowType()}"></td>
-                                        <td class="count" th:text ="${Workflow.getCount()}"></td>
                                         <td th:text ="${Workflow.getAvgMs()}"></td>
                                         <td><button type="button" class="btn workflow-info">Click!</button></td>
+                                        <td class="count" th:text ="${Workflow.getCount()}"></td>
 
                                         <!-- Modal -->
                                         <div class="modal">
@@ -158,12 +166,12 @@
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="/vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/js/demo/datatables-demo.js"></script>
+    <script src="/js/datatables.js"></script>
     <script src="/js/user-define.js"></script>
-    <script src="/js/demo/chart-bar-demo.js"></script>
+    <script src="/js/chart-bar.js"></script>
     <script src="/js/modal.js"></script>
 
 </body>
