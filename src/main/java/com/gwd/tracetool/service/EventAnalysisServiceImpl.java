@@ -40,7 +40,6 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
             stat.increaseStat(model.getEventName());
         }
 
-        Collections.sort(stat.getEventNames());
         return stat;
     }
 

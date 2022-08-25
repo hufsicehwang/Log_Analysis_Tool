@@ -61,7 +61,7 @@ public class ToolSession {
     }
 
     private String generateEventFileName(String date) {
-        // example : dags_feign.2022-07-14.log
+        // example : dems.2022-07-14.log
         simpleFormatter.setLenient(false);
         try {
             // 대상 인자 검증
