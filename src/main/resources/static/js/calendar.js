@@ -1,13 +1,9 @@
 $(document).ready(function() {
     calendarInit();
-});
-/*
-    달력 렌더링 할 때 필요한 정보 목록
 
-    현재 월(초기값 : 현재 시간)
-    금월 마지막일 날짜와 요일
-    전월 마지막일 날짜와 요일
-*/
+    let ms = 544321;
+    console.log(ms/1000);
+});
 
 function calendarInit() {
 
@@ -15,18 +11,13 @@ function calendarInit() {
     let date = new Date(); // 현재 날짜(로컬 기준) 가져오기
     let utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
     let kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
-    let today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
+    let today = new Date(utc + kstGap);
 
     let thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    // 달력에서 표기하는 날짜 객체
-
 
     let currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
     let currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
     let currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
-
-    // kst 기준 현재시간
-    // console.log(thisMonth);
 
     // 캘린더 렌더링
     renderCalender(thisMonth);
@@ -47,8 +38,6 @@ function calendarInit() {
         let endDay = new Date(currentYear, currentMonth + 1, 0);
         let nextDate = endDay.getDate();
         let nextDay = endDay.getDay();
-
-        // console.log(prevDate, prevDay, nextDate, nextDay);
 
         // 현재 월 표기
         $('.year-month').text(currentYear + '.' + (currentMonth + 1));
@@ -96,9 +85,10 @@ function calendarInit() {
     });
 
 
-
+    // 날짜 선택
      let fileDate = 0;
 
+    // 다른 요소 클릭시 이전 요소 배경을 흰색으로
     function clearBackground(){
         let days=  document.querySelectorAll('.current');
         for(let i=0;i<days.length;i++){
@@ -106,6 +96,8 @@ function calendarInit() {
         }
 
     }
+
+    // 날짜 선택
     function selectDay(event){
         clearBackground();
         event.target.style.background = '#ced4da';
@@ -113,15 +105,17 @@ function calendarInit() {
         fileDate = getYearMonth() +'-'+fileDate;
         console.log(fileDate);
     }
+
+    addClickEvent();
+    // 모든 날짜에 click event 추가
     function addClickEvent(){
         let days=  document.querySelectorAll('.current');
         for(let i=0;i<days.length;i++){
-            //console.log(days[i].innerText);
             days[i].addEventListener("click",selectDay);
         }
     }
-    addClickEvent();
 
+    // 선택한 일자의 연, 월 구하기
     function getYearMonth(){
         let yearMonthStr = document.querySelector('.year-month').innerText;
         yearMonth = yearMonthStr.split('.');
@@ -134,9 +128,8 @@ function calendarInit() {
         return yearMonthStr;
     }
 
+    // 선택한 날짜 ajax 통신
     document.querySelector('.calendar-btn').addEventListener("click",sendDate);
-
-
     function sendDate(){
         $.ajax({
             type:'post',

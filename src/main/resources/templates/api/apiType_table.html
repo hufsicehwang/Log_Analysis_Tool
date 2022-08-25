@@ -61,7 +61,7 @@
                                         <tr>
                                             <th>API Type</th>
                                             <th>Host</th>
-                                            <th>Average Time(ms)</th>
+                                            <th>Average Time</th>
                                             <th>Count</th>
                                         </tr>
                                     </thead>
@@ -77,7 +77,7 @@
                                         <tr th:each="API:${data.getTypes()}">
                                             <td th:text =${API.getType()} class="label"></td>
                                             <td th:text =${API.getHost()}></td>
-                                            <td th:text =${API.getAvgMs()}></td>
+                                            <td th:text =${API.getAvgMs()} class="time"></td>
                                             <td th:text =${API.getCount()} class="count"></td>
                                         </tr>
                                     </tbody>

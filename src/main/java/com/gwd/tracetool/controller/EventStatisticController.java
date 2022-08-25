@@ -111,5 +111,4 @@ public class EventStatisticController {
         return "event/errorEvent_table";
     }
 
-
 }

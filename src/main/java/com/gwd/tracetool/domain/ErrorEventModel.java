@@ -16,6 +16,7 @@ public class ErrorEventModel {
     private int demsHost;
     private String createAt;
 
+
     @Builder
     public ErrorEventModel(String errorName, String failEventName, String failWorkFlowType, String failTransactionId, int demsHost, String createAt) {
         this.errorName = errorName;
