@@ -7,7 +7,6 @@ import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
 import com.gwd.tracetool.domain.statistic.event.node.WorkflowNode;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 
 @Component

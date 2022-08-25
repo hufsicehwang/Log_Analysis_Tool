@@ -2,21 +2,10 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-let labels = document.querySelectorAll('.label');
-let labelArr = new Array();
-for(let i=0; i < labels.length; i++){
-    labelArr.push(labels[i].innerText);
-}
-
-let data = document.querySelectorAll('.count');
-let dataArr = new Array();
-for(let i=0; i < data.length; i++){
-      dataArr.push(data[i].innerText);
-}
 max =0;
-for(var i =0; i<data.length;i++){
-    if(parseInt(data[i].innerText) > max){
-        max = parseInt(data[i].innerText);
+for(let i =0; i<timeArr.length;i++){
+    if(parseInt(timeArr[i]) > max){
+        max = parseInt(timeArr[i]);
     }
 }
 
@@ -46,16 +35,16 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Bar Chart Example
-let ctx = document.getElementById("myBarChart");
-let myBarChart = new Chart(ctx, {
+let chart = document.getElementById("myTimeChart");
+let myTimeChart = new Chart(chart, {
   type: "bar",
   data: {
     labels: labelArr,
     datasets: [{
-      label: "Count",
-      data: dataArr,
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
+      label: "Average Time",
+      data: timeArr,
+      backgroundColor: "#1cc88a",
+      hoverBackgroundColor: "#17a673",
       borderColor: "#4e73df"
     }],
   },
@@ -79,7 +68,7 @@ let myBarChart = new Chart(ctx, {
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 20
+          maxTicksLimit: 6
         },
         maxBarThickness: 25,
       }],

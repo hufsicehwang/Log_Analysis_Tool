@@ -2,7 +2,7 @@ $(document).ready(function() {
     calendarInit();
 
     let ms = 544321;
-    console.log(ms/1000);
+    (ms/1000);
 });
 
 function calendarInit() {
@@ -103,7 +103,7 @@ function calendarInit() {
         event.target.style.background = '#ced4da';
         fileDate = event.target.innerText;
         fileDate = getYearMonth() +'-'+fileDate;
-        console.log(fileDate);
+        (fileDate);
     }
 
     addClickEvent();

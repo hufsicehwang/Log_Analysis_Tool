@@ -1,18 +1,15 @@
 package com.gwd.tracetool.controller;
 
 import com.gwd.tracetool.component.ToolSession;
-import com.gwd.tracetool.domain.FileDateDTO;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.junit.runner.Request;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor

@@ -8,14 +8,14 @@
     <title>Log Analysis Tool</title>
 
     <!-- Custom fonts for this template -->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="/css/userDefine.css" rel="stylesheet">
+    <link href="/css/others.css" rel="stylesheet">
     <link href="/css/modal.css" rel="stylesheet">
 </head>
 
@@ -58,8 +58,8 @@
                                     <thead>
                                     <tr>
                                         <th>Workflow Type</th>
-                                        <th>Average Ms</th>
                                         <th>Additional Info</th>
+                                        <th>Average Time</th>
                                         <th>Count</th>
                                     </tr>
                                     </thead>
@@ -75,8 +75,8 @@
                                     <tr th:each="Workflow:${data.getWorkflows()}">
 
                                         <td class="label" th:text ="${Workflow.getWorkflowType()}"></td>
-                                        <td th:text ="${Workflow.getAvgMs()}"></td>
                                         <td><button type="button" class="btn workflow-info">Click!</button></td>
+                                        <td th:text ="${Workflow.getAvgMs()}" class="time"></td>
                                         <td class="count" th:text ="${Workflow.getCount()}"></td>
 
                                         <!-- Modal -->
@@ -119,7 +119,7 @@
                         <!-- Bar Chart -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Count Chart</h6>
                             </div>
                             <div class="card-body">
                                 <div class="chart-bar">
@@ -130,6 +130,40 @@
                                     <span>Maximum data : "</span><span class="max-name"></span><span>"</span>
                                     <br>
                                     <span>count : </span><span class="max-count"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-7">
+
+                        <!-- Bar Chart -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Time Chart</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-bar">
+                                    <canvas id="myTimeChart"></canvas>
+                                </div>
+                                <hr>
+                                <div class="chart-subText">
+                                    <span>Maximum data : "</span><span class="time-max-name"></span><span>"</span>
+                                    <br>
+                                    <span>Average Time : </span><span class="time-max"></span>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +199,7 @@
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
 
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
@@ -174,9 +208,11 @@
 
     <!-- Page level custom scripts -->
     <script src="/js/datatables.js"></script>
-    <script src="/js/user-define.js"></script>
+    <script src="/js/others.js"></script>
     <script src="/js/chart-bar.js"></script>
+    <script src="/js/chart-bar-average-time.js"></script>
     <script src="/js/modal.js"></script>
+    <script src="/js/average-time.js"></script>
 
 </body>
 

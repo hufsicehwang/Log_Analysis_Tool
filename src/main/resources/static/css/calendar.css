@@ -115,3 +115,23 @@
 .sec_cal .cal_wrap .day.disable {
     color: #ddd;
 }
+
+.calender{
+    width: 50%;
+    height: 80%;
+    padding: 20px 60px;
+    margin-left: 30px;
+}
+.calendar-btn{
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background: #4e73df;
+    color: white;
+    transition: all 1s;
+}
+.calendar-btn:hover{
+    background: #1971c2;
+    transform: scale(1.2);
+}

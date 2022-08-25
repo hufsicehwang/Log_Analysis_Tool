@@ -7,7 +7,6 @@ function Modal(num) {
   return function() {
     btns[num].onclick =  function() {
         modals[num].style.display = "block";
-        console.log(num);
     };
 
     spanes[num].onclick = function() {

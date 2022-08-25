@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,9 +65,9 @@ public class ApiParserServiceImpl implements ApiParserService {
                     subList.add(apiModel);
                 }
             }
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             log.info("File Dose Not Exist : log-path={}, stack-trace={}", path, new Throwable().getStackTrace());
-        }catch (IOException e) {
+        } catch (IOException e) {
             log.info("Fail to parse log : log-path={}, stack-trace={}", path, new Throwable().getStackTrace());
         }
         return subList;

@@ -1,3 +1,4 @@
+/* home start */
 .logo_subText{
     font-size: 8px;
 }
@@ -31,36 +32,23 @@
     background: white;
     overflow-y:hidden ;
 }
-.calender{
-    width: 50%;
-    height: 80%;
-    padding: 20px 60px;
-    margin-left: 30px;
-}
-.calendar-btn{
-    width: 200px;
-    height: 50px;
-    border-radius: 10px;
-    border: none;
-    background: #4e73df;
-    color: white;
-    transition: all 1s;
-}
-.calendar-btn:hover{
-    background: #1971c2;
-    transform: scale(1.2);
-}
+
 .btn-section{
     margin-top: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
     right: 10rem;
 }
+/* home end */
+
+
+/* table */
 .selected-date, .main-text{
     color: #4e73df !important
 }
+
+/* workflow */
 .workflow-inf{
     transition: all 1s;
 }
@@ -70,6 +58,8 @@
     transform: scale(1.2);
 
 }
+
+/* chart */
 .chart-subText{
     font-weight:bold;
 }

@@ -1487,8 +1487,8 @@ pre code {
     }
 
     .col-xl-8 {
-        flex: 0 0 80%;
-        max-width: 80%
+        flex: 0 0 100%;
+        max-width: 100%
     }
 
     .col-xl-9 {

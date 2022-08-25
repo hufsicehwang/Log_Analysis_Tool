@@ -13,11 +13,6 @@ import java.util.List;
 
 import static com.gwd.tracetool.utils.Constants.simpleFormatter;
 
-//    dags1: C:\Users\User\Desktop\log\dags1
-//            dags2: C:\Users\User\Desktop\log\dags2
-//            dems1: C:\Users\User\Desktop\log\dems1\trace
-//            dems2: C:\Users\User\Desktop\log\dems2\trace
-
 @Component
 @RequiredArgsConstructor
 public class ToolSession {

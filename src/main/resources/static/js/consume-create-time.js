@@ -1,5 +1,4 @@
-// time 통계 최댓값
-console.log("Asdsadsa");
+// consumed time, created at time 통계 최댓값, label 구하기
 let countList = document.querySelectorAll('.count');
 let labelList = document.querySelectorAll('.label');
 let max=0;
