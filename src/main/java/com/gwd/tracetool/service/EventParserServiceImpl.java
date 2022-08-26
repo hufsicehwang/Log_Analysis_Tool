@@ -78,12 +78,12 @@ public class EventParserServiceImpl implements EventParserService {
             JSONObject headerJSON = new JSONObject();
 
             while ((line = br.readLine()) != null) {
-                if (line.contains(eventQueueRecord)) {
+                if (line.contains(EVENT_QUEUE_RECORD)) {
 
-                    int i = line.indexOf(eventToken) + eventToken.length();
+                    int i = line.indexOf(EVENT_TOKEN) + EVENT_TOKEN.length();
                     if (i != -1) {
 
-                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
+                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), FORMATTER);
                         String subStr = line.substring(i);
 
                         headerJSON = stringToJSON(subStr);
@@ -112,11 +112,11 @@ public class EventParserServiceImpl implements EventParserService {
 
 
             while ((line = br.readLine()) != null) {
-                if (line.contains(errorEventQueueRecord)) {
-                    int i = line.indexOf(errorEventToken) + errorEventToken.length();
+                if (line.contains(ERROR_EVENT_QUEUE_RECORD)) {
+                    int i = line.indexOf(ERROR_EVENT_TOKEN) + ERROR_EVENT_TOKEN.length();
 
                     if (i != -1) {
-                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
+                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), FORMATTER);
                         String subStr = line.substring(i);
 
                         headerJSON = stringToJSON(subStr);
@@ -185,10 +185,10 @@ public class EventParserServiceImpl implements EventParserService {
 
     private String generateErrorFileName(String date) {
         // example : dems_error.2022-07-14.log
-        simpleFormatter.setLenient(false);
+        SIMPLE_FORMATTER.setLenient(false);
         try {
             // 대상 인자 검증
-            simpleFormatter.parse(date);
+            SIMPLE_FORMATTER.parse(date);
             return String.format("dems_error.%s.log", date);
         } catch (java.text.ParseException e) {
             log.info("Fail to parse log : log-path={}, stack-trace={}", date, new Throwable().getStackTrace());

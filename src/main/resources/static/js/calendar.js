@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
     calendarInit();
 
     let ms = 544321;
-    (ms/1000);
+    (ms / 1000);
 });
 
 function calendarInit() {
@@ -63,22 +63,22 @@ function calendarInit() {
         if (today.getMonth() == currentMonth) {
             todayDate = today.getDate();
             let currentMonthDate = document.querySelectorAll('.dates .current');
-            currentMonthDate[todayDate -1].classList.add('today');
-            currentMonthDate[todayDate -1].style.color = '#3b5bdb';
-            currentMonthDate[todayDate -1].style.fontWeight = 'bold'
+            currentMonthDate[todayDate - 1].classList.add('today');
+            currentMonthDate[todayDate - 1].style.color = '#3b5bdb';
+            currentMonthDate[todayDate - 1].style.fontWeight = 'bold'
             // currentMonthDate[todayDate -1].innerHTML = currentMonthDate[todayDate -1].innerHTML + '<div><sub>Today</sub></div>'
         }
     }
 
     // 이전달로 이동
-    $('.go-prev').on('click', function() {
+    $('.go-prev').on('click', function () {
         thisMonth = new Date(currentYear, currentMonth - 1, 1);
         renderCalender(thisMonth);
         addClickEvent();
     });
 
     // 다음달로 이동
-    $('.go-next').on('click', function() {
+    $('.go-next').on('click', function () {
         thisMonth = new Date(currentYear, currentMonth + 1, 1);
         renderCalender(thisMonth);
         addClickEvent();
@@ -86,68 +86,68 @@ function calendarInit() {
 
 
     // 날짜 선택
-     let fileDate = 0;
+    let fileDate = 0;
 
     // 다른 요소 클릭시 이전 요소 배경을 흰색으로
-    function clearBackground(){
-        let days=  document.querySelectorAll('.current');
-        for(let i=0;i<days.length;i++){
+    function clearBackground() {
+        let days = document.querySelectorAll('.current');
+        for (let i = 0; i < days.length; i++) {
             days[i].style.background = 'white'
         }
 
     }
 
     // 날짜 선택
-    function selectDay(event){
+    function selectDay(event) {
         clearBackground();
         event.target.style.background = '#ced4da';
         fileDate = event.target.innerText;
-        fileDate = getYearMonth() +'-'+fileDate;
+        fileDate = getYearMonth() + '-' + fileDate;
         (fileDate);
     }
 
     addClickEvent();
+
     // 모든 날짜에 click event 추가
-    function addClickEvent(){
-        let days=  document.querySelectorAll('.current');
-        for(let i=0;i<days.length;i++){
-            days[i].addEventListener("click",selectDay);
+    function addClickEvent() {
+        let days = document.querySelectorAll('.current');
+        for (let i = 0; i < days.length; i++) {
+            days[i].addEventListener("click", selectDay);
         }
     }
 
     // 선택한 일자의 연, 월 구하기
-    function getYearMonth(){
+    function getYearMonth() {
         let yearMonthStr = document.querySelector('.year-month').innerText;
         yearMonth = yearMonthStr.split('.');
-        if(yearMonth[1]<10){
+        if (yearMonth[1] < 10) {
             yearMonthStr = yearMonth[0] + '-' + '0' + yearMonth[1];
-        }
-        else{
+        } else {
             yearMonthStr = yearMonth[0] + '-' + yearMonth[1];
         }
         return yearMonthStr;
     }
 
     // 선택한 날짜 ajax 통신
-    document.querySelector('.calendar-btn').addEventListener("click",sendDate);
-    function sendDate(){
+    document.querySelector('.calendar-btn').addEventListener("click", sendDate);
+
+    function sendDate() {
         $.ajax({
-            type:'post',
-            url:'/home/select-date',
-            data:{
-                date : fileDate
+            type: 'post',
+            url: '/home/select-date',
+            data: {
+                date: fileDate
             },
-            success:function(data){
-                if(data=="OK"){
+            success: function (data) {
+                if (data == true) {
                     window.location.href = '/api/analysis/dags-log/api-type';
-                }
-                else{
-                   alert("해당 날짜의 file이 존재 하지 않습니다. \n :: Selected Date : "+fileDate);
+                } else {
+                    alert("해당 날짜의 file이 존재 하지 않습니다. \n :: Selected Date : " + fileDate);
                 }
             },
-            error:function(){
+            error: function () {
                 console.log("error");
             }
         })
-        }
+    }
 }

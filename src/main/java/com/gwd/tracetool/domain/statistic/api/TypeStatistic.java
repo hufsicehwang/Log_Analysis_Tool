@@ -13,15 +13,17 @@ public class TypeStatistic { // api 종류에 따라 통계
 
     public void increaseStat(ApiModel model) {
         int time = Integer.parseInt(model.getTime().replace("ms", ""));
+        String type = model.getApiType();
+        String host = model.getHost();
 
         for (TypeNode node : types) {
-            if (node.getType().equals(model.getApiType()) && node.getHost().equals(model.getHost())) {
+            if (node.getType().equals(type) && node.getHost().equals(host)) {
                 node.increaseCount();
                 node.increaseAvgTime(time);
                 return;
             }
         }
-        TypeNode node = new TypeNode(model.getApiType(), model.getHost());
+        TypeNode node = new TypeNode(type, host);
         node.increaseCount();
         node.increaseAvgTime(time);
         types.add(node);

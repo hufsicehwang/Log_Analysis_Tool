@@ -11,25 +11,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.gwd.tracetool.utils.Constants.simpleFormatter;
+import static com.gwd.tracetool.utils.Constants.SIMPLE_FORMATTER;
 
 @Component
 @RequiredArgsConstructor
-public class ToolSession {
+public class FileExist {
     private final ToolProperties toolProperties;
 
-    public String checkFileExist(String fileDate) {
+    public boolean checkFileExist(String fileDate) {
         List<Path> filePathList = createFilePath(fileDate);
         for (Path logPath : filePathList) {
             File file = new File(logPath.toString());
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            } catch (FileNotFoundException e) {
-                return "File Not Found";
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if (file.exists()==false){
+                return false;
             }
         }
-        return "OK";
+        return true;
     }
 
     private List<Path> createFilePath(String fileDate) {
@@ -46,10 +43,10 @@ public class ToolSession {
 
     private String generateApiFileName(String date) {
         // example : dags_feign.2022-07-14.log
-        simpleFormatter.setLenient(false);
+        SIMPLE_FORMATTER.setLenient(false);
         try {
             // 대상 인자 검증
-            simpleFormatter.parse(date);
+            SIMPLE_FORMATTER.parse(date);
         } catch (ParseException e) {
         }
         return String.format("dags_feign.%s.log", date);
@@ -57,10 +54,10 @@ public class ToolSession {
 
     private String generateEventFileName(String date) {
         // example : dems.2022-07-14.log
-        simpleFormatter.setLenient(false);
+        SIMPLE_FORMATTER.setLenient(false);
         try {
             // 대상 인자 검증
-            simpleFormatter.parse(date);
+            SIMPLE_FORMATTER.parse(date);
         } catch (ParseException e) {
         }
         return String.format("dems.%s.log", date);

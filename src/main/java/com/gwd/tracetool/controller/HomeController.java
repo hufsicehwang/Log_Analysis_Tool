@@ -1,6 +1,6 @@
 package com.gwd.tracetool.controller;
 
-import com.gwd.tracetool.component.ToolSession;
+import com.gwd.tracetool.component.FileExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final ToolSession toolSession;
+    private final FileExist fileExist;
 
     @GetMapping("/select-date")
     public String home(HttpServletRequest request) {
@@ -26,15 +26,17 @@ public class HomeController {
 
     @ResponseBody
     @PostMapping("/select-date")
-    public String homeToStatistic(HttpServletRequest request) {
+    public Boolean homeToStatistic(HttpServletRequest request) {
         String fileDate = request.getParameter("date");
-        String fileExist = toolSession.checkFileExist(fileDate);
+        Boolean exist = fileExist.checkFileExist(fileDate);
 
-        // 해당 file date가 존재 한다면
-        if (fileExist == "OK") {
+        // 해당 file date가 존재 한다면 session 저장
+        if (exist == true) {
             HttpSession session = request.getSession();
             session.setAttribute("fileDate", fileDate);
         }
-        return fileExist;
+
+        // in calendar.js, ajax response로 반환
+        return exist;
     }
 }

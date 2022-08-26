@@ -49,14 +49,14 @@ public class ApiParserServiceImpl implements ApiParserService {
             String line;
 
             while ((line = br.readLine()) != null) {
-                if (!line.contains(apiQueueRecord)) {
+                if (!line.contains(API_QUEUE_RECORD)) {
                     continue;
                 }
 
-                int i = line.indexOf(apiQueueRecord) + apiQueueRecord.length();
+                int i = line.indexOf(API_QUEUE_RECORD) + API_QUEUE_RECORD.length();
                 if (i != -1) {
 
-                    LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
+                    LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), FORMATTER);
                     String strDate = line.substring(i);
 
                     ApiModel apiModel = createApiModel(strDate);
@@ -96,10 +96,10 @@ public class ApiParserServiceImpl implements ApiParserService {
 
     private String generateLogfileName(String date) {
         // example : dags_feign.2022-07-14.log
-        simpleFormatter.setLenient(false);
+        SIMPLE_FORMATTER.setLenient(false);
         try {
             // 대상 인자 검증
-            simpleFormatter.parse(date);
+            SIMPLE_FORMATTER.parse(date);
         } catch (java.text.ParseException e) {
             log.info("Fail to parse log : log-path={}, stack-trace={}", date, new Throwable().getStackTrace());
         }

@@ -1,6 +1,5 @@
 package com.gwd.tracetool.service;
 
-import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
 import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
@@ -22,7 +21,4 @@ public interface EventAnalysisService {
     TransactionNode searchTransaction(List<EventModel> eventModels, String id);
 
     ProviderStatistic calcProvider(List<EventModel> eventModels);
-
-    ErrorStatistic calcError(List<ErrorEventModel> errorEventModels);
-
 }

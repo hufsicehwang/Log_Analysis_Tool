@@ -48,6 +48,7 @@ public class JSONUtils {
             return "NoWorkflow";
         }
     }
+
     public static String getErrorName(JSONObject headerJSON) {
         try {
             JSONObject headerObject = (JSONObject) JSONValue.parse(headerJSON.get("header").toString());
@@ -67,6 +68,7 @@ public class JSONUtils {
             return "NoFailEventName";
         }
     }
+
     public static String getFailWorkflowType(JSONObject headerJSON) {
         try {
             JSONObject failEventWorkflowObject = (JSONObject) JSONValue.parse(headerJSON.get("failEventWorkflow").toString());
