@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class DestinationHostStatistic {  // 목적지 host 별
+public class DestinationHostStatistic {  // 목적지 host에 따라 통계
     private final List<HostNode> destinationHosts = new ArrayList<>();
 
     public void increaseStat(String nodeName) {

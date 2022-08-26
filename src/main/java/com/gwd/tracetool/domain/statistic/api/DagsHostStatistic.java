@@ -2,21 +2,20 @@ package com.gwd.tracetool.domain.statistic.api;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
-public class DagsHostStatistic { // dags server 별
-    private Integer dags1ApiCount;
-    private Integer dags2ApiCount;
+public class DagsHostStatistic {  // dags log file이 생성된 server host에 따라 통계
+    private Map<Integer, Integer> dagsHosts = new HashMap<Integer, Integer>();
 
-    public DagsHostStatistic() {
-        this.dags1ApiCount = 0;
-        this.dags2ApiCount = 0;
-    }
-
-    public void increaseDags1ApiCount() {
-        dags1ApiCount++;
-    }
-
-    public void increaseDags2ApiCount() {
-        dags2ApiCount++;
+    public void increaseStat(Integer demsHost) {
+        for (Map.Entry<Integer, Integer> elem : dagsHosts.entrySet()) {
+            if (elem.getKey().equals(demsHost)) {
+                elem.setValue(elem.getValue().intValue() + 1);
+                return;
+            }
+        }
+        dagsHosts.put(demsHost, 1);
     }
 }

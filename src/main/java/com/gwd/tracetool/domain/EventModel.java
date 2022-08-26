@@ -1,49 +1,37 @@
 package com.gwd.tracetool.domain;
 
-public class EventModel {
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class EventModel implements Comparable<EventModel> {
     private String eventName;
     private String transactionId;
-    private String createAt;
+    private LocalDateTime createAt;
     private String provider;
     private String httpStatusCode;
+    private int demsHost;
+    private String workflowType;
+    private LocalDateTime occurrenceTime;
 
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
+    @Builder
+    public EventModel(String eventName, String transactionId, LocalDateTime createAt, String provider, String httpStatusCode, String workflowType, int demsHost, LocalDateTime occurrenceTime) {
         this.eventName = eventName;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public String getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(String createAt) {
         this.createAt = createAt;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
         this.provider = provider;
-    }
-
-    public String getHttpStatusCode() {
-        return httpStatusCode;
-    }
-
-    public void setHttpStatusCode(String httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
+        this.workflowType = workflowType;
+        this.demsHost = demsHost;
+        this.occurrenceTime = occurrenceTime;
     }
+
+    @Override
+    public int compareTo(EventModel o) {
+        return this.occurrenceTime.compareTo(o.getOccurrenceTime());
+    }
+
 }

@@ -21,4 +21,10 @@ public class ToolProperties {
 
     @Value("${tools.log-path.dems2}")
     private String dems2LogPath;
+
+    @Value("${tools.log-path.dems1-error}")
+    private String dems1ErrorLogPath;
+
+    @Value("${tools.log-path.dems2-error}")
+    private String dems2ErrorLogPath;
 }

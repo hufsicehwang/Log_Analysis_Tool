@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class StatusCodeStatistic {
+public class StatusCodeStatistic {  // 상태 코드에 따라 통계
     private final List<StatusCodeNode> codeNodeList = new ArrayList<>();
 
     public void increaseStat(int statusCode) {
-        for (StatusCodeNode node : codeNodeList) {  // 기존에 statusCode가 있다면 해당 노드 increaseCount
+        for (StatusCodeNode node : codeNodeList) {
             if (node.getStatusCode() == statusCode) {
                 node.increaseCount();
                 return;
             }
         }
-        StatusCodeNode node = new StatusCodeNode(statusCode);  // 기존에 statusCode가 없다면 해당 statusCode를 인자값으로 줘서 생성
+        StatusCodeNode node = new StatusCodeNode(statusCode);
         node.increaseCount();
         codeNodeList.add(node);
     }

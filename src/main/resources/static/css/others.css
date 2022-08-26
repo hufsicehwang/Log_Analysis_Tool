@@ -1,0 +1,65 @@
+/* home start */
+.logo_subText{
+    font-size: 8px;
+}
+.logo{
+    width: 70px;
+    height: 30px;
+}
+.topbar-text{
+    font-size: 25px;
+    color: black;
+}
+.topBar-text2, .topBar-text1{
+    display:inline;
+}
+.topBar-text2{
+    position:absolute;
+    right:1rem;
+}
+.left-img{
+    background-image: url(/img/home.jpg) ;
+    background-size: cover;
+    width: 50%;
+    height: 80%;
+    padding:30px;
+}
+.file-date-wapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 50px 50px;
+    background: white;
+    overflow-y:hidden ;
+}
+
+.btn-section{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    right: 10rem;
+}
+/* home end */
+
+
+/* table */
+.selected-date, .main-text{
+    color: #4e73df !important
+}
+
+/* workflow */
+.workflow-inf{
+    transition: all 1s;
+}
+.workflow-info:hover{
+    color:#4e73df;
+    font-weight:bold;
+    transform: scale(1.2);
+
+}
+
+/* chart */
+.chart-subText{
+    font-weight:bold;
+}

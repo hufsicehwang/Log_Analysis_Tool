@@ -1,4 +1,5 @@
 package com.gwd.tracetool.domain;
+
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -7,9 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ApiModel implements Comparable<ApiModel>{
+public class ApiModel implements Comparable<ApiModel> {
     private LocalDateTime occurrenceTime;
-    private Integer logOffset;
+    private Integer dagsHost;
     private String host;
     private String apiType;
     private Integer code;
@@ -18,9 +19,9 @@ public class ApiModel implements Comparable<ApiModel>{
     private String body;
 
     @Builder
-    public ApiModel(LocalDateTime occurrenceTime, Integer logOffset, String host, String apiType, Integer code, String time, String message, String body) {
+    public ApiModel(LocalDateTime occurrenceTime, Integer dagsHost, String host, String apiType, Integer code, String time, String message, String body) {
         this.occurrenceTime = occurrenceTime;
-        this.logOffset = logOffset;
+        this.dagsHost = dagsHost;
         this.host = host;
         this.apiType = apiType;
         this.code = code;

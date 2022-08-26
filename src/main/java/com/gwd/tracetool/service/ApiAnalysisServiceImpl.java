@@ -21,15 +21,10 @@ public class ApiAnalysisServiceImpl implements ApiAnalysisService {
 
     @Override
     public DagsHostStatistic calcDagsHost(List<ApiModel> apiModels) {
-
         DagsHostStatistic stat = new DagsHostStatistic();
-        for (ApiModel model : apiModels) {
 
-            if (model.getLogOffset() == 1) {
-                stat.increaseDags1ApiCount();
-            } else {
-                stat.increaseDags2ApiCount();
-            }
+        for (ApiModel model : apiModels) {
+            stat.increaseStat(model.getDagsHost());
         }
         return stat;
     }
@@ -56,11 +51,11 @@ public class ApiAnalysisServiceImpl implements ApiAnalysisService {
     public TypeStatistic calcType(List<ApiModel> apiModels) {
         TypeStatistic stat = new TypeStatistic();
         for (ApiModel model : apiModels) {
-            stat.increaseStat(model.getApiType(), model.getTime());
+            stat.increaseStat(model);
         }
 
         for (TypeNode type : stat.getTypes()) {
-            type.setAvgTime(type.getAvgTime() / type.getCount());
+            type.setAvgMs(type.getAvgMs() / type.getCount());
         }
 
         return stat;
