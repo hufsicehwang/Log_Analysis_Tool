@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class DemsHostStatistic {   // dags log file이 생성된 server host에 따라 통계
+public class DemsHostStatistic {   // dems log file이 생성된 server host에 따라 통계
     private Map<Integer, Integer> demsHosts = new HashMap<Integer, Integer>();
 
     public void increaseStat(Integer demsHost) {

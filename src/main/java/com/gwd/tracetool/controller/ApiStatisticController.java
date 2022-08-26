@@ -1,49 +1,86 @@
 package com.gwd.tracetool.controller;
 
-import com.gwd.tracetool.domain.ApiModel;
 import com.gwd.tracetool.domain.statistic.api.*;
 import com.gwd.tracetool.service.ApiAnalysisService;
 import com.gwd.tracetool.service.ApiParserService;
+import com.gwd.tracetool.utils.ScriptUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
+@RequestMapping("/api/analysis/dags-log")
 public class ApiStatisticController {
     private final ApiParserService apiParserService;
     private final ApiAnalysisService apiAnalysisService;
 
-    @GetMapping("/api/parse/dags-log")
-    public List<ApiModel> parseDagsLog(@RequestParam String date) {
-        return apiParserService.readApiList(date);
+    @GetMapping("/time-consume")
+    public String calcTime(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            TimeStatistic stat = apiAnalysisService.calcTime(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
+        return "/api/consumeTime_table";
+
     }
 
-    @GetMapping("/api/analysis/dags-log/time-consume")
-    public TimeStatistic calcTime(@RequestParam String date) {
-        return apiAnalysisService.calcTime(apiParserService.readApiList(date));
+    @GetMapping("/destination-host")
+    public String calcDestinationHost(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            DestinationHostStatistic stat = apiAnalysisService.calcDestinationHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
+        return "/api/destinationHost_table";
     }
 
-    @GetMapping("/api/analysis/dags-log/destination-host")
-    public DestinationHostStatistic calcDestinationHost(@RequestParam String date) {
-        return apiAnalysisService.calcDestinationHost(apiParserService.readApiList(date));
+    @GetMapping("/status-code")
+    public String calcStatusCode(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            StatusCodeStatistic stat = apiAnalysisService.calcStatusCode(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
+        return "/api/statusCode_table";
     }
 
-    @GetMapping("/api/analysis/dags-log/status-code")
-    public StatusCodeStatistic calcStatusCode(@RequestParam String date) {
-        return apiAnalysisService.calcStatusCode(apiParserService.readApiList(date));
+    @GetMapping("/dags-host")
+    public String calcDagsHost(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            DagsHostStatistic stat = apiAnalysisService.calcDagsHost(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
+        return "api/dagsHostServer_table";
     }
 
-    @GetMapping("/api/analysis/dags-log/dags-host")
-    public DagsHostStatistic calcDagsHost(@RequestParam String date) {
-        return apiAnalysisService.calcDagsHost(apiParserService.readApiList(date));
-    }
-
-    @GetMapping("/api/analysis/dags-log/api-type")
-    public TypeStatistic calcType(@RequestParam String date) {
-        return apiAnalysisService.calcType(apiParserService.readApiList(date));
+    @GetMapping("/api-type")
+    public String calcType(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        try {
+            HttpSession session = request.getSession();
+            TypeStatistic stat = apiAnalysisService.calcType(apiParserService.readApiList(session.getAttribute("fileDate").toString()));
+            model.addAttribute("data", stat);
+        } catch (NullPointerException e) {
+            ScriptUtils.alertAndRender(response, "File Date를 먼저 선택해 주세요.", "/home/select-date");
+        }
+        return "/api/apiType_table";
     }
 }

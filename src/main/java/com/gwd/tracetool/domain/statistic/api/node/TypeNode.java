@@ -7,11 +7,13 @@ import lombok.Setter;
 @Setter
 public class TypeNode {
     private final String type;
+    private final String host;
     private int count;
-    private int avgTime;
+    private int avgMs;
 
-    public TypeNode(String type) {
+    public TypeNode(String type, String host) {
         this.type = type;
+        this.host = host;
     }
 
     public void increaseCount() {
@@ -19,6 +21,6 @@ public class TypeNode {
     }
 
     public void increaseAvgTime(int timeConsume) {
-        avgTime += timeConsume;
+        avgMs += timeConsume;
     }
 }

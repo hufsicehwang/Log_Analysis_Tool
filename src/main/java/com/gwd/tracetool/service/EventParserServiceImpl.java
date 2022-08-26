@@ -20,11 +20,12 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static com.gwd.tracetool.utils.Constants.*;
 
 @Slf4j
 @Component
@@ -34,7 +35,7 @@ public class EventParserServiceImpl implements EventParserService {
     private final ToolProperties toolProperties;
 
     @Override
-    public List readEventList(String date) {
+    public List<EventModel> readEventList(String date) {
 
         int demsHost = 1;
         List<EventModel> list = new ArrayList<EventModel>();
@@ -53,7 +54,7 @@ public class EventParserServiceImpl implements EventParserService {
     }
 
     @Override
-    public List readErrorEventList(String date) {
+    public List<ErrorEventModel> readErrorEventList(String date) {
         int demsHost = 1;
         List<ErrorEventModel> list = new ArrayList<ErrorEventModel>();
         String fileName = generateErrorFileName(date);
@@ -65,29 +66,24 @@ public class EventParserServiceImpl implements EventParserService {
         for (Path logPath : dagsLogDirPathList) {
             list.addAll(readErrorEventLogFile(logPath, demsHost++));
         }
-
         return list;
     }
 
-    private List readEventLogFile(Path path, int demsHost) {
+    private List<EventModel> readEventLogFile(Path path, int demsHost) {
         List<EventModel> list = new ArrayList<EventModel>();
-        JSONObject headerJSON = new JSONObject();
         File file = new File(path.toString());
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            String token = "receivemessage: ";
-            String queueRecord = "receive message propertioes: MessageProperties";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-
+            JSONObject headerJSON = new JSONObject();
 
             while ((line = br.readLine()) != null) {
-                if (line.contains(queueRecord)) {
+                if (line.contains(EVENT_QUEUE_RECORD)) {
 
-                    int i = line.indexOf(token) + token.length();
+                    int i = line.indexOf(EVENT_TOKEN) + EVENT_TOKEN.length();
                     if (i != -1) {
 
-                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
+                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), FORMATTER);
                         String subStr = line.substring(i);
 
                         headerJSON = stringToJSON(subStr);
@@ -105,25 +101,24 @@ public class EventParserServiceImpl implements EventParserService {
 
         return list;
     }
-    private List readErrorEventLogFile(Path path, int demsHost) {
-        List<ErrorEventModel> list = new ArrayList<ErrorEventModel>();
-        JSONObject headerJSON = new JSONObject();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        File file = new File(path.toString());
 
-        String queueRecord = "receive error message propertioes: MessageProperties";
-        String token = "receivemessage: ";
+    private List<ErrorEventModel> readErrorEventLogFile(Path path, int demsHost) {
+        List<ErrorEventModel> list = new ArrayList<ErrorEventModel>();
+        File file = new File(path.toString());
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
+            JSONObject headerJSON = new JSONObject();
+
 
             while ((line = br.readLine()) != null) {
-                if (line.contains(queueRecord)) {
-                    int i = line.indexOf(token) + token.length();
+                if (line.contains(ERROR_EVENT_QUEUE_RECORD)) {
+                    int i = line.indexOf(ERROR_EVENT_TOKEN) + ERROR_EVENT_TOKEN.length();
 
                     if (i != -1) {
-                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
+                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), FORMATTER);
                         String subStr = line.substring(i);
+
                         headerJSON = stringToJSON(subStr);
                         ErrorEventModel errorEventModel = createErrorEventModel(headerJSON);
                         errorEventModel.setDemsHost(demsHost);
@@ -187,20 +182,18 @@ public class EventParserServiceImpl implements EventParserService {
         }
         return String.format("dems.%s.log", date);
     }
+
     private String generateErrorFileName(String date) {
         // example : dems_error.2022-07-14.log
+        SIMPLE_FORMATTER.setLenient(false);
         try {
-            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy-MM-dd");
-            dateFormatParser.setLenient(false);
             // 대상 인자 검증
-            dateFormatParser.parse(date);
+            SIMPLE_FORMATTER.parse(date);
             return String.format("dems_error.%s.log", date);
-        } catch (Exception e) {
-            String yyyy = date.substring(0, 4);
-            String mm = date.substring(4, 6);
-            String dd = date.substring(6, 8);
-            return String.format("dems_error.%s-%s-%s.log", yyyy, mm, dd);
+        } catch (java.text.ParseException e) {
+            log.info("Fail to parse log : log-path={}, stack-trace={}", date, new Throwable().getStackTrace());
         }
+        return String.format("dems.%s.log", date);
     }
 
     private JSONObject stringToJSON(String strValue) {

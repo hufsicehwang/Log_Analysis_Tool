@@ -1,6 +1,5 @@
 package com.gwd.tracetool.service;
 
-import com.gwd.tracetool.domain.ErrorEventModel;
 import com.gwd.tracetool.domain.EventModel;
 import com.gwd.tracetool.domain.statistic.event.*;
 import com.gwd.tracetool.domain.statistic.event.node.TransactionNode;
@@ -38,20 +37,22 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         for (EventModel model : eventModels) {
             stat.increaseStat(model.getEventName());
         }
+
         return stat;
     }
 
     @Override
     public WorkflowStatistic calcWorkflow(List<EventModel> eventModels) {
         WorkflowStatistic stat = new WorkflowStatistic();
-        List<TransactionNode> transactions = calcTransaction(eventModels).getTransactions();
+        List<TransactionNode> transactions = createTransactions(eventModels);
 
         for (TransactionNode model : transactions) {
             stat.increaseStat(model);
         }
 
         for (WorkflowNode node : stat.getWorkflows()) {
-            node.setAvgMs(node.getTotalMs() / node.getCount());
+            node.setCount(node.getTransactions().size());
+            node.setAvgMs(node.getAvgMs() / node.getCount());
         }
         return stat;
     }
@@ -59,7 +60,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
     @Override
     public ConsumeTimeStatistic calcConsumeTime(List<EventModel> eventModels) {
         ConsumeTimeStatistic stat = new ConsumeTimeStatistic();
-        List<TransactionNode> transactions = calcTransaction(eventModels).getTransactions();
+        List<TransactionNode> transactions = createTransactions(eventModels);
 
         for (TransactionNode node : transactions) {
             stat.increaseConsumeTimeCount((int) node.getConsumeMs());
@@ -67,7 +68,19 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         return stat;
     }
 
-    private TransactionStatistic calcTransaction(List<EventModel> eventModels) {
+    @Override
+    public TransactionNode searchTransaction(List<EventModel> eventModels, String id) {
+        List<TransactionNode> transactions = createTransactions(eventModels);
+
+        for (TransactionNode node : transactions) {
+            if (node.getTransactionId().equals(id)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private List<TransactionNode> createTransactions(List<EventModel> eventModels) {
         TransactionStatistic stat = new TransactionStatistic();
 
         for (EventModel model : eventModels) {
@@ -77,7 +90,7 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         for (TransactionNode node : stat.getTransactions()) {
             node.setConsumeMs(node.getStartTime(), node.getEndTime());
         }
-        return stat;
+        return stat.getTransactions();
     }
 
     @Override
@@ -90,14 +103,4 @@ public class EventAnalysisServiceImpl implements EventAnalysisService {
         return stat;
     }
 
-    @Override
-    public ErrorStatistic calcError(List<ErrorEventModel> errorEventModels) {
-        ErrorStatistic stat = new ErrorStatistic();
-
-        for (ErrorEventModel model : errorEventModels) {
-            stat.increaseErrorNameStat(model.getErrorName());
-            //stat.increaseFailEventStat(model.getFailEventName());
-        }
-        return stat;
-    }
 }
